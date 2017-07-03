@@ -7,14 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F8F4EF473F171ABB03B2928 /* libPods-iMCO_RTSDKDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF808E51BC04FEB93219194 /* libPods-iMCO_RTSDKDemo.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		7B08C1E4374BCDD29B1FE2EF /* libPods-iMCO_RTSDKDemoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AACBB922AF9CF2DB3D0574D /* libPods-iMCO_RTSDKDemoUITests.a */; };
+		8D5A4F92F7317E601D4C2B1A /* libPods-iMCO_RTSDKDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9E9338A7B1DD881EBF8024 /* libPods-iMCO_RTSDKDemoTests.a */; };
 		9E1103BC1F0A214D005A084E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103BB1F0A214D005A084E /* main.m */; };
 		9E1103BF1F0A214D005A084E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103BE1F0A214D005A084E /* AppDelegate.m */; };
-		9E1103C21F0A214D005A084E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103C11F0A214D005A084E /* ViewController.m */; };
 		9E1103C51F0A214D005A084E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103C31F0A214D005A084E /* Main.storyboard */; };
 		9E1103C71F0A214D005A084E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103C61F0A214D005A084E /* Assets.xcassets */; };
 		9E1103CA1F0A214D005A084E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103C81F0A214D005A084E /* LaunchScreen.storyboard */; };
 		9E1103D51F0A214D005A084E /* iMCO_RTSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103D41F0A214D005A084E /* iMCO_RTSDKDemoTests.m */; };
 		9E1103E01F0A214D005A084E /* iMCO_RTSDKDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */; };
+		9E1104011F0A2191005A084E /* ZHDeviceActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103EF1F0A2191005A084E /* ZHDeviceActionViewController.m */; };
+		9E1104021F0A2191005A084E /* ZHDeviceActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103F01F0A2191005A084E /* ZHDeviceActionViewController.xib */; };
+		9E1104031F0A2191005A084E /* ZHDeviceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103F21F0A2191005A084E /* ZHDeviceListTableViewController.m */; };
+		9E1104041F0A2191005A084E /* ZHDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103F51F0A2191005A084E /* ZHDeviceModel.m */; };
+		9E1104051F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103F91F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */; };
+		9E1104061F0A2191005A084E /* ZHCommandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103FD1F0A2191005A084E /* ZHCommandTableViewCell.m */; };
+		9E1104071F0A2191005A084E /* ZHCommandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103FE1F0A2191005A084E /* ZHCommandTableViewCell.xib */; };
+		9E1104081F0A2191005A084E /* ZHDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1104001F0A2191005A084E /* ZHDeviceTableViewCell.m */; };
+		9E1104581F0A3946005A084E /* iMCO_RTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */; };
+		9E1104591F0A394C005A084E /* iMCO_RTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */; };
+		9E11045A1F0A394C005A084E /* iMCO_RTSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,13 +47,32 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9E1104561F0A36BB005A084E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9E11045A1F0A394C005A084E /* iMCO_RTSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2CF808E51BC04FEB93219194 /* libPods-iMCO_RTSDKDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iMCO_RTSDKDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44478CF842E7465599CF780A /* Pods-iMCO_RTSDKDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemoUITests/Pods-iMCO_RTSDKDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		4627C95E3B0D680CC52AE2E5 /* Pods-iMCO_RTSDKDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemoTests/Pods-iMCO_RTSDKDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		75CA845AF539CDF8C5F014F4 /* Pods-iMCO_RTSDKDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemoTests/Pods-iMCO_RTSDKDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		77282100FFF836831A636863 /* Pods-iMCO_RTSDKDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemo/Pods-iMCO_RTSDKDemo.release.xcconfig"; sourceTree = "<group>"; };
+		8C9E9338A7B1DD881EBF8024 /* libPods-iMCO_RTSDKDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iMCO_RTSDKDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AACBB922AF9CF2DB3D0574D /* libPods-iMCO_RTSDKDemoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iMCO_RTSDKDemoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1103B71F0A214D005A084E /* iMCO_RTSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iMCO_RTSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1103BB1F0A214D005A084E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9E1103BD1F0A214D005A084E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E1103BE1F0A214D005A084E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9E1103C01F0A214D005A084E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9E1103C11F0A214D005A084E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9E1103C41F0A214D005A084E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9E1103C61F0A214D005A084E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E1103C91F0A214D005A084E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +83,23 @@
 		9E1103DB1F0A214D005A084E /* iMCO_RTSDKDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iMCO_RTSDKDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iMCO_RTSDKDemoUITests.m; sourceTree = "<group>"; };
 		9E1103E11F0A214D005A084E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E1103EE1F0A2191005A084E /* ZHDeviceActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceActionViewController.h; sourceTree = "<group>"; };
+		9E1103EF1F0A2191005A084E /* ZHDeviceActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceActionViewController.m; sourceTree = "<group>"; };
+		9E1103F01F0A2191005A084E /* ZHDeviceActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHDeviceActionViewController.xib; sourceTree = "<group>"; };
+		9E1103F11F0A2191005A084E /* ZHDeviceListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceListTableViewController.h; sourceTree = "<group>"; };
+		9E1103F21F0A2191005A084E /* ZHDeviceListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceListTableViewController.m; sourceTree = "<group>"; };
+		9E1103F41F0A2191005A084E /* ZHDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceModel.h; sourceTree = "<group>"; };
+		9E1103F51F0A2191005A084E /* ZHDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceModel.m; sourceTree = "<group>"; };
+		9E1103F91F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin"; sourceTree = "<group>"; };
+		9E1103FC1F0A2191005A084E /* ZHCommandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHCommandTableViewCell.h; sourceTree = "<group>"; };
+		9E1103FD1F0A2191005A084E /* ZHCommandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHCommandTableViewCell.m; sourceTree = "<group>"; };
+		9E1103FE1F0A2191005A084E /* ZHCommandTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHCommandTableViewCell.xib; sourceTree = "<group>"; };
+		9E1103FF1F0A2191005A084E /* ZHDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceTableViewCell.h; sourceTree = "<group>"; };
+		9E1104001F0A2191005A084E /* ZHDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceTableViewCell.m; sourceTree = "<group>"; };
+		9E1104521F0A35B9005A084E /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMCO_RTSDK.framework; sourceTree = "<group>"; };
+		B1DC1052B780E5BE6DE1494F /* Pods-iMCO_RTSDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemo/Pods-iMCO_RTSDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		E896C89505642E512058147B /* Pods-iMCO_RTSDKDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemoUITests/Pods-iMCO_RTSDKDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +107,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E1104591F0A394C005A084E /* iMCO_RTSDK.framework in Frameworks */,
+				6F8F4EF473F171ABB03B2928 /* libPods-iMCO_RTSDKDemo.a in Frameworks */,
+				9E1104581F0A3946005A084E /* iMCO_RTSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D5A4F92F7317E601D4C2B1A /* libPods-iMCO_RTSDKDemoTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,19 +125,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B08C1E4374BCDD29B1FE2EF /* libPods-iMCO_RTSDKDemoUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7499D799D7CA3537D62AE8BA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B1DC1052B780E5BE6DE1494F /* Pods-iMCO_RTSDKDemo.debug.xcconfig */,
+				77282100FFF836831A636863 /* Pods-iMCO_RTSDKDemo.release.xcconfig */,
+				75CA845AF539CDF8C5F014F4 /* Pods-iMCO_RTSDKDemoTests.debug.xcconfig */,
+				4627C95E3B0D680CC52AE2E5 /* Pods-iMCO_RTSDKDemoTests.release.xcconfig */,
+				E896C89505642E512058147B /* Pods-iMCO_RTSDKDemoUITests.debug.xcconfig */,
+				44478CF842E7465599CF780A /* Pods-iMCO_RTSDKDemoUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9E1103AE1F0A214D005A084E = {
 			isa = PBXGroup;
 			children = (
+				9E1104091F0A22CF005A084E /* iMCOSDK */,
+				9E1103ED1F0A2191005A084E /* Controllers */,
+				9E1103F31F0A2191005A084E /* Models */,
+				9E1103F61F0A2191005A084E /* Resouces */,
+				9E1103FB1F0A2191005A084E /* Views */,
 				9E1103B91F0A214D005A084E /* iMCO_RTSDKDemo */,
 				9E1103D31F0A214D005A084E /* iMCO_RTSDKDemoTests */,
 				9E1103DE1F0A214D005A084E /* iMCO_RTSDKDemoUITests */,
 				9E1103B81F0A214D005A084E /* Products */,
+				7499D799D7CA3537D62AE8BA /* Pods */,
+				DB15EE50AADC4E3C364A4E7C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,8 +177,6 @@
 			children = (
 				9E1103BD1F0A214D005A084E /* AppDelegate.h */,
 				9E1103BE1F0A214D005A084E /* AppDelegate.m */,
-				9E1103C01F0A214D005A084E /* ViewController.h */,
-				9E1103C11F0A214D005A084E /* ViewController.m */,
 				9E1103C31F0A214D005A084E /* Main.storyboard */,
 				9E1103C61F0A214D005A084E /* Assets.xcassets */,
 				9E1103C81F0A214D005A084E /* LaunchScreen.storyboard */,
@@ -140,6 +212,90 @@
 			path = iMCO_RTSDKDemoUITests;
 			sourceTree = "<group>";
 		};
+		9E1103ED1F0A2191005A084E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9E1103F11F0A2191005A084E /* ZHDeviceListTableViewController.h */,
+				9E1103F21F0A2191005A084E /* ZHDeviceListTableViewController.m */,
+				9E1103EE1F0A2191005A084E /* ZHDeviceActionViewController.h */,
+				9E1103EF1F0A2191005A084E /* ZHDeviceActionViewController.m */,
+				9E1103F01F0A2191005A084E /* ZHDeviceActionViewController.xib */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9E1103F31F0A2191005A084E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9E1103F41F0A2191005A084E /* ZHDeviceModel.h */,
+				9E1103F51F0A2191005A084E /* ZHDeviceModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E1103F61F0A2191005A084E /* Resouces */ = {
+			isa = PBXGroup;
+			children = (
+				9E1103F71F0A2191005A084E /* OTA */,
+			);
+			path = Resouces;
+			sourceTree = "<group>";
+		};
+		9E1103F71F0A2191005A084E /* OTA */ = {
+			isa = PBXGroup;
+			children = (
+				9E1103F81F0A2191005A084E /* Application */,
+				9E1103FA1F0A2191005A084E /* Patch */,
+			);
+			path = OTA;
+			sourceTree = "<group>";
+		};
+		9E1103F81F0A2191005A084E /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				9E1103F91F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		9E1103FA1F0A2191005A084E /* Patch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Patch;
+			sourceTree = "<group>";
+		};
+		9E1103FB1F0A2191005A084E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9E1103FC1F0A2191005A084E /* ZHCommandTableViewCell.h */,
+				9E1103FD1F0A2191005A084E /* ZHCommandTableViewCell.m */,
+				9E1103FE1F0A2191005A084E /* ZHCommandTableViewCell.xib */,
+				9E1103FF1F0A2191005A084E /* ZHDeviceTableViewCell.h */,
+				9E1104001F0A2191005A084E /* ZHDeviceTableViewCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9E1104091F0A22CF005A084E /* iMCOSDK */ = {
+			isa = PBXGroup;
+			children = (
+				9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */,
+			);
+			path = iMCOSDK;
+			sourceTree = "<group>";
+		};
+		DB15EE50AADC4E3C364A4E7C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9E1104521F0A35B9005A084E /* CoreBluetooth.framework */,
+				2CF808E51BC04FEB93219194 /* libPods-iMCO_RTSDKDemo.a */,
+				8C9E9338A7B1DD881EBF8024 /* libPods-iMCO_RTSDKDemoTests.a */,
+				9AACBB922AF9CF2DB3D0574D /* libPods-iMCO_RTSDKDemoUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +303,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E1103E41F0A214D005A084E /* Build configuration list for PBXNativeTarget "iMCO_RTSDKDemo" */;
 			buildPhases = (
+				3897708D90ABBFA3DF511F13 /* [CP] Check Pods Manifest.lock */,
 				9E1103B31F0A214D005A084E /* Sources */,
 				9E1103B41F0A214D005A084E /* Frameworks */,
 				9E1103B51F0A214D005A084E /* Resources */,
+				F0FD65CF15360935655E2AB2 /* [CP] Embed Pods Frameworks */,
+				7221A6E4A057A6956A43E2B8 /* [CP] Copy Pods Resources */,
+				9E1104561F0A36BB005A084E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -164,9 +324,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E1103E71F0A214D005A084E /* Build configuration list for PBXNativeTarget "iMCO_RTSDKDemoTests" */;
 			buildPhases = (
+				91C2B3AEB84BFD17AA63966A /* [CP] Check Pods Manifest.lock */,
 				9E1103CC1F0A214D005A084E /* Sources */,
 				9E1103CD1F0A214D005A084E /* Frameworks */,
 				9E1103CE1F0A214D005A084E /* Resources */,
+				2B61880ED461FF50216F8FFF /* [CP] Embed Pods Frameworks */,
+				E5EB0899081F1D5CA3AFB40D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,9 +345,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E1103EA1F0A214D005A084E /* Build configuration list for PBXNativeTarget "iMCO_RTSDKDemoUITests" */;
 			buildPhases = (
+				F99D7067FAB4C9FEC276C2A2 /* [CP] Check Pods Manifest.lock */,
 				9E1103D71F0A214D005A084E /* Sources */,
 				9E1103D81F0A214D005A084E /* Frameworks */,
 				9E1103D91F0A214D005A084E /* Resources */,
+				E440F4CDB3901E7BA5C95A39 /* [CP] Embed Pods Frameworks */,
+				2A3FAD5293763EB2AD102A7B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -249,9 +415,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E1104021F0A2191005A084E /* ZHDeviceActionViewController.xib in Resources */,
 				9E1103CA1F0A214D005A084E /* LaunchScreen.storyboard in Resources */,
 				9E1103C71F0A214D005A084E /* Assets.xcassets in Resources */,
+				9E1104051F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */,
 				9E1103C51F0A214D005A084E /* Main.storyboard in Resources */,
+				9E1104071F0A2191005A084E /* ZHCommandTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,14 +440,156 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2A3FAD5293763EB2AD102A7B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iMCO_RTSDKDemoUITests/Pods-iMCO_RTSDKDemoUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2B61880ED461FF50216F8FFF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iMCO_RTSDKDemoTests/Pods-iMCO_RTSDKDemoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3897708D90ABBFA3DF511F13 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7221A6E4A057A6956A43E2B8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iMCO_RTSDKDemo/Pods-iMCO_RTSDKDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		91C2B3AEB84BFD17AA63966A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E440F4CDB3901E7BA5C95A39 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iMCO_RTSDKDemoUITests/Pods-iMCO_RTSDKDemoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5EB0899081F1D5CA3AFB40D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iMCO_RTSDKDemoTests/Pods-iMCO_RTSDKDemoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0FD65CF15360935655E2AB2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iMCO_RTSDKDemo/Pods-iMCO_RTSDKDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F99D7067FAB4C9FEC276C2A2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9E1103B31F0A214D005A084E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E1103C21F0A214D005A084E /* ViewController.m in Sources */,
+				9E1104011F0A2191005A084E /* ZHDeviceActionViewController.m in Sources */,
+				9E1104041F0A2191005A084E /* ZHDeviceModel.m in Sources */,
+				9E1104061F0A2191005A084E /* ZHCommandTableViewCell.m in Sources */,
 				9E1103BF1F0A214D005A084E /* AppDelegate.m in Sources */,
+				9E1104031F0A2191005A084E /* ZHDeviceListTableViewController.m in Sources */,
 				9E1103BC1F0A214D005A084E /* main.m in Sources */,
+				9E1104081F0A2191005A084E /* ZHDeviceTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,10 +736,16 @@
 		};
 		9E1103E51F0A214D005A084E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1DC1052B780E5BE6DE1494F /* Pods-iMCO_RTSDKDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 638EB3H4SQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMCOSDK",
+				);
 				INFOPLIST_FILE = iMCO_RTSDKDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Imco.iMCO-RTSDKDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -437,10 +754,16 @@
 		};
 		9E1103E61F0A214D005A084E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77282100FFF836831A636863 /* Pods-iMCO_RTSDKDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 638EB3H4SQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iMCOSDK",
+				);
 				INFOPLIST_FILE = iMCO_RTSDKDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Imco.iMCO-RTSDKDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -449,6 +772,7 @@
 		};
 		9E1103E81F0A214D005A084E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 75CA845AF539CDF8C5F014F4 /* Pods-iMCO_RTSDKDemoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 638EB3H4SQ;
@@ -462,6 +786,7 @@
 		};
 		9E1103E91F0A214D005A084E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4627C95E3B0D680CC52AE2E5 /* Pods-iMCO_RTSDKDemoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 638EB3H4SQ;
@@ -475,6 +800,7 @@
 		};
 		9E1103EB1F0A214D005A084E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E896C89505642E512058147B /* Pods-iMCO_RTSDKDemoUITests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 638EB3H4SQ;
 				INFOPLIST_FILE = iMCO_RTSDKDemoUITests/Info.plist;
@@ -487,6 +813,7 @@
 		};
 		9E1103EC1F0A214D005A084E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 44478CF842E7465599CF780A /* Pods-iMCO_RTSDKDemoUITests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 638EB3H4SQ;
 				INFOPLIST_FILE = iMCO_RTSDKDemoUITests/Info.plist;
@@ -516,6 +843,7 @@
 				9E1103E61F0A214D005A084E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E1103E71F0A214D005A084E /* Build configuration list for PBXNativeTarget "iMCO_RTSDKDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +852,7 @@
 				9E1103E91F0A214D005A084E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9E1103EA1F0A214D005A084E /* Build configuration list for PBXNativeTarget "iMCO_RTSDKDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +861,7 @@
 				9E1103EC1F0A214D005A084E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

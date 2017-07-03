@@ -29,7 +29,6 @@
     
     self.realTekManager = [ZHRealTekDataManager shareRealTekDataManager];
     typeof(self) __weak  weakSelf = self;
-    
     self.realTekManager.disConnectionBlock = ^(ZHRealTekDevice *device, NSError *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.devices removeAllObjects];
@@ -72,18 +71,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self startScan];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        // code to be executed on the main queue after delay
-        [self startScan];
-    });
-
 }
 
 - (void)didReceiveMemoryWarning {

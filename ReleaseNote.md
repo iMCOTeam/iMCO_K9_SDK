@@ -15,15 +15,16 @@
 
 ### Release Date
 
-20170703
+20170802
 
 ### Git Version
 
-126cbbeb2bde77c61ec6c0e8410d681e5dfc5fb0
+a8913f4436263daa172e50c0471f4148d35b5fd4
 
 ### New Features
 
-### Bug Fixed
+1. 基本功能实现。
 
-### Bug Know
+   ​
+
 

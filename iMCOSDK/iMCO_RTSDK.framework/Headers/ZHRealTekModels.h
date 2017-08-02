@@ -25,13 +25,14 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_FirmWare_Update_Status)
 
 // Error Code
 enum ZH_RealTek_Error_Code{
-    ZHCharactiristicNotFindCode = 1001,
-    ZHDisConnectedErrorCode = 1002,
-    ZHBatteryErrorCode  = 1003,
-    ZHMacAddressErrorCode = 1004,
-    ZHUpdateFirmWareFaild = 1005,
-    ZHBindErrorCode = 1006,
-    ZHTimeOutErrorCode = 1007,
+    ZHCharactiristicNotFindCode = 10001,
+    ZHDisConnectedErrorCode = 10002,
+    ZHBatteryErrorCode  = 10003,
+    ZHMacAddressErrorCode = 10004,
+    ZHUpdateFirmWareFaild = 10005,
+    ZHBindErrorCode = 10006,
+    ZHTimeOutErrorCode = 10007,
+    ZHFirmWareUrlIsEmptyErrorCode = 10008,
 };
 
 // Check OTA FirmWare Code

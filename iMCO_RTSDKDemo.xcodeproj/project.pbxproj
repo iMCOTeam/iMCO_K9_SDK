@@ -17,17 +17,22 @@
 		9E1103CA1F0A214D005A084E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103C81F0A214D005A084E /* LaunchScreen.storyboard */; };
 		9E1103D51F0A214D005A084E /* iMCO_RTSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103D41F0A214D005A084E /* iMCO_RTSDKDemoTests.m */; };
 		9E1103E01F0A214D005A084E /* iMCO_RTSDKDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */; };
-		9E1104011F0A2191005A084E /* ZHDeviceActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103EF1F0A2191005A084E /* ZHDeviceActionViewController.m */; };
-		9E1104021F0A2191005A084E /* ZHDeviceActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103F01F0A2191005A084E /* ZHDeviceActionViewController.xib */; };
-		9E1104031F0A2191005A084E /* ZHDeviceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103F21F0A2191005A084E /* ZHDeviceListTableViewController.m */; };
-		9E1104041F0A2191005A084E /* ZHDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103F51F0A2191005A084E /* ZHDeviceModel.m */; };
-		9E1104051F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103F91F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */; };
-		9E1104061F0A2191005A084E /* ZHCommandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103FD1F0A2191005A084E /* ZHCommandTableViewCell.m */; };
-		9E1104071F0A2191005A084E /* ZHCommandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103FE1F0A2191005A084E /* ZHCommandTableViewCell.xib */; };
-		9E1104081F0A2191005A084E /* ZHDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1104001F0A2191005A084E /* ZHDeviceTableViewCell.m */; };
-		9E1104581F0A3946005A084E /* iMCO_RTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */; };
-		9E1104591F0A394C005A084E /* iMCO_RTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */; };
-		9E11045A1F0A394C005A084E /* iMCO_RTSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9E9611461F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9E9611411F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle */; };
+		9E9611471F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */ = {isa = PBXBuildFile; fileRef = 9E9611441F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */; };
+		9E9611511F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E96114A1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m */; };
+		9E9611521F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E96114B1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.xib */; };
+		9E9611531F31CDDA00BDFE81 /* ZHDeviceActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E96114D1F31CDDA00BDFE81 /* ZHDeviceActionViewController.m */; };
+		9E9611541F31CDDA00BDFE81 /* ZHDeviceActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E96114E1F31CDDA00BDFE81 /* ZHDeviceActionViewController.xib */; };
+		9E9611551F31CDDA00BDFE81 /* ZHDeviceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9611501F31CDDA00BDFE81 /* ZHDeviceListTableViewController.m */; };
+		9E96115F1F31CE0600BDFE81 /* ZHCommandTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9611581F31CE0600BDFE81 /* ZHCommandTableViewCell.m */; };
+		9E9611601F31CE0600BDFE81 /* ZHCommandTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E9611591F31CE0600BDFE81 /* ZHCommandTableViewCell.xib */; };
+		9E9611611F31CE0600BDFE81 /* ZHDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E96115B1F31CE0600BDFE81 /* ZHDeviceTableViewCell.m */; };
+		9E9611621F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E96115D1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.m */; };
+		9E9611631F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E96115E1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.xib */; };
+		9E9611691F31CE3600BDFE81 /* ZHDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9611661F31CE3600BDFE81 /* ZHDeviceModel.m */; };
+		9E96116A1F31CE3600BDFE81 /* ZHFunctionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9611681F31CE3600BDFE81 /* ZHFunctionModel.m */; };
+		9E9611AB1F31D02D00BDFE81 /* iMCO_RTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */; };
+		9E9611AD1F31D63F00BDFE81 /* iMCO_RTSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +59,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9E11045A1F0A394C005A084E /* iMCO_RTSDK.framework in Embed Frameworks */,
+				9E9611AD1F31D63F00BDFE81 /* iMCO_RTSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,21 +88,30 @@
 		9E1103DB1F0A214D005A084E /* iMCO_RTSDKDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iMCO_RTSDKDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iMCO_RTSDKDemoUITests.m; sourceTree = "<group>"; };
 		9E1103E11F0A214D005A084E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E1103EE1F0A2191005A084E /* ZHDeviceActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceActionViewController.h; sourceTree = "<group>"; };
-		9E1103EF1F0A2191005A084E /* ZHDeviceActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceActionViewController.m; sourceTree = "<group>"; };
-		9E1103F01F0A2191005A084E /* ZHDeviceActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHDeviceActionViewController.xib; sourceTree = "<group>"; };
-		9E1103F11F0A2191005A084E /* ZHDeviceListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceListTableViewController.h; sourceTree = "<group>"; };
-		9E1103F21F0A2191005A084E /* ZHDeviceListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceListTableViewController.m; sourceTree = "<group>"; };
-		9E1103F41F0A2191005A084E /* ZHDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceModel.h; sourceTree = "<group>"; };
-		9E1103F51F0A2191005A084E /* ZHDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceModel.m; sourceTree = "<group>"; };
-		9E1103F91F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin"; sourceTree = "<group>"; };
-		9E1103FC1F0A2191005A084E /* ZHCommandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHCommandTableViewCell.h; sourceTree = "<group>"; };
-		9E1103FD1F0A2191005A084E /* ZHCommandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHCommandTableViewCell.m; sourceTree = "<group>"; };
-		9E1103FE1F0A2191005A084E /* ZHCommandTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHCommandTableViewCell.xib; sourceTree = "<group>"; };
-		9E1103FF1F0A2191005A084E /* ZHDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceTableViewCell.h; sourceTree = "<group>"; };
-		9E1104001F0A2191005A084E /* ZHDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceTableViewCell.m; sourceTree = "<group>"; };
 		9E1104521F0A35B9005A084E /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMCO_RTSDK.framework; sourceTree = "<group>"; };
+		9E9611411F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZHRealTekSDKAssets.bundle; sourceTree = "<group>"; };
+		9E9611441F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin"; sourceTree = "<group>"; };
+		9E9611491F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHChooseFirmwareTableViewController.h; sourceTree = "<group>"; };
+		9E96114A1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHChooseFirmwareTableViewController.m; sourceTree = "<group>"; };
+		9E96114B1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHChooseFirmwareTableViewController.xib; sourceTree = "<group>"; };
+		9E96114C1F31CDDA00BDFE81 /* ZHDeviceActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceActionViewController.h; sourceTree = "<group>"; };
+		9E96114D1F31CDDA00BDFE81 /* ZHDeviceActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceActionViewController.m; sourceTree = "<group>"; };
+		9E96114E1F31CDDA00BDFE81 /* ZHDeviceActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHDeviceActionViewController.xib; sourceTree = "<group>"; };
+		9E96114F1F31CDDA00BDFE81 /* ZHDeviceListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceListTableViewController.h; sourceTree = "<group>"; };
+		9E9611501F31CDDA00BDFE81 /* ZHDeviceListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceListTableViewController.m; sourceTree = "<group>"; };
+		9E9611571F31CE0600BDFE81 /* ZHCommandTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHCommandTableViewCell.h; sourceTree = "<group>"; };
+		9E9611581F31CE0600BDFE81 /* ZHCommandTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHCommandTableViewCell.m; sourceTree = "<group>"; };
+		9E9611591F31CE0600BDFE81 /* ZHCommandTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHCommandTableViewCell.xib; sourceTree = "<group>"; };
+		9E96115A1F31CE0600BDFE81 /* ZHDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceTableViewCell.h; sourceTree = "<group>"; };
+		9E96115B1F31CE0600BDFE81 /* ZHDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceTableViewCell.m; sourceTree = "<group>"; };
+		9E96115C1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHTitleAndSwitchTableViewCell.h; sourceTree = "<group>"; };
+		9E96115D1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHTitleAndSwitchTableViewCell.m; sourceTree = "<group>"; };
+		9E96115E1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZHTitleAndSwitchTableViewCell.xib; sourceTree = "<group>"; };
+		9E9611651F31CE3600BDFE81 /* ZHDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHDeviceModel.h; sourceTree = "<group>"; };
+		9E9611661F31CE3600BDFE81 /* ZHDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceModel.m; sourceTree = "<group>"; };
+		9E9611671F31CE3600BDFE81 /* ZHFunctionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHFunctionModel.h; sourceTree = "<group>"; };
+		9E9611681F31CE3600BDFE81 /* ZHFunctionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHFunctionModel.m; sourceTree = "<group>"; };
+		9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMCO_RTSDK.framework; sourceTree = "<group>"; };
 		B1DC1052B780E5BE6DE1494F /* Pods-iMCO_RTSDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemo/Pods-iMCO_RTSDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		E896C89505642E512058147B /* Pods-iMCO_RTSDKDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemoUITests/Pods-iMCO_RTSDKDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,9 +121,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E1104591F0A394C005A084E /* iMCO_RTSDK.framework in Frameworks */,
 				6F8F4EF473F171ABB03B2928 /* libPods-iMCO_RTSDKDemo.a in Frameworks */,
-				9E1104581F0A3946005A084E /* iMCO_RTSDK.framework in Frameworks */,
+				9E9611AB1F31D02D00BDFE81 /* iMCO_RTSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,11 +161,11 @@
 		9E1103AE1F0A214D005A084E = {
 			isa = PBXGroup;
 			children = (
+				9E9611641F31CE3600BDFE81 /* Models */,
+				9E9611561F31CE0600BDFE81 /* Views */,
+				9E9611481F31CDDA00BDFE81 /* Controllers */,
+				9E96113F1F31CDBB00BDFE81 /* Resouces */,
 				9E1104091F0A22CF005A084E /* iMCOSDK */,
-				9E1103ED1F0A2191005A084E /* Controllers */,
-				9E1103F31F0A2191005A084E /* Models */,
-				9E1103F61F0A2191005A084E /* Resouces */,
-				9E1103FB1F0A2191005A084E /* Views */,
 				9E1103B91F0A214D005A084E /* iMCO_RTSDKDemo */,
 				9E1103D31F0A214D005A084E /* iMCO_RTSDKDemoTests */,
 				9E1103DE1F0A214D005A084E /* iMCO_RTSDKDemoUITests */,
@@ -212,77 +225,94 @@
 			path = iMCO_RTSDKDemoUITests;
 			sourceTree = "<group>";
 		};
-		9E1103ED1F0A2191005A084E /* Controllers */ = {
+		9E1104091F0A22CF005A084E /* iMCOSDK */ = {
 			isa = PBXGroup;
 			children = (
-				9E1103F11F0A2191005A084E /* ZHDeviceListTableViewController.h */,
-				9E1103F21F0A2191005A084E /* ZHDeviceListTableViewController.m */,
-				9E1103EE1F0A2191005A084E /* ZHDeviceActionViewController.h */,
-				9E1103EF1F0A2191005A084E /* ZHDeviceActionViewController.m */,
-				9E1103F01F0A2191005A084E /* ZHDeviceActionViewController.xib */,
+				9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */,
 			);
-			path = Controllers;
+			path = iMCOSDK;
 			sourceTree = "<group>";
 		};
-		9E1103F31F0A2191005A084E /* Models */ = {
+		9E96113F1F31CDBB00BDFE81 /* Resouces */ = {
 			isa = PBXGroup;
 			children = (
-				9E1103F41F0A2191005A084E /* ZHDeviceModel.h */,
-				9E1103F51F0A2191005A084E /* ZHDeviceModel.m */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		9E1103F61F0A2191005A084E /* Resouces */ = {
-			isa = PBXGroup;
-			children = (
-				9E1103F71F0A2191005A084E /* OTA */,
+				9E9611401F31CDBB00BDFE81 /* Assets */,
+				9E9611421F31CDBB00BDFE81 /* OTA */,
 			);
 			path = Resouces;
 			sourceTree = "<group>";
 		};
-		9E1103F71F0A2191005A084E /* OTA */ = {
+		9E9611401F31CDBB00BDFE81 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				9E1103F81F0A2191005A084E /* Application */,
-				9E1103FA1F0A2191005A084E /* Patch */,
+				9E9611411F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		9E9611421F31CDBB00BDFE81 /* OTA */ = {
+			isa = PBXGroup;
+			children = (
+				9E9611431F31CDBB00BDFE81 /* Application */,
+				9E9611451F31CDBB00BDFE81 /* Patch */,
 			);
 			path = OTA;
 			sourceTree = "<group>";
 		};
-		9E1103F81F0A2191005A084E /* Application */ = {
+		9E9611431F31CDBB00BDFE81 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				9E1103F91F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */,
+				9E9611441F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */,
 			);
 			path = Application;
 			sourceTree = "<group>";
 		};
-		9E1103FA1F0A2191005A084E /* Patch */ = {
+		9E9611451F31CDBB00BDFE81 /* Patch */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Patch;
 			sourceTree = "<group>";
 		};
-		9E1103FB1F0A2191005A084E /* Views */ = {
+		9E9611481F31CDDA00BDFE81 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9E1103FC1F0A2191005A084E /* ZHCommandTableViewCell.h */,
-				9E1103FD1F0A2191005A084E /* ZHCommandTableViewCell.m */,
-				9E1103FE1F0A2191005A084E /* ZHCommandTableViewCell.xib */,
-				9E1103FF1F0A2191005A084E /* ZHDeviceTableViewCell.h */,
-				9E1104001F0A2191005A084E /* ZHDeviceTableViewCell.m */,
+				9E9611491F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.h */,
+				9E96114A1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m */,
+				9E96114B1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.xib */,
+				9E96114C1F31CDDA00BDFE81 /* ZHDeviceActionViewController.h */,
+				9E96114D1F31CDDA00BDFE81 /* ZHDeviceActionViewController.m */,
+				9E96114E1F31CDDA00BDFE81 /* ZHDeviceActionViewController.xib */,
+				9E96114F1F31CDDA00BDFE81 /* ZHDeviceListTableViewController.h */,
+				9E9611501F31CDDA00BDFE81 /* ZHDeviceListTableViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9E9611561F31CE0600BDFE81 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9E9611571F31CE0600BDFE81 /* ZHCommandTableViewCell.h */,
+				9E9611581F31CE0600BDFE81 /* ZHCommandTableViewCell.m */,
+				9E9611591F31CE0600BDFE81 /* ZHCommandTableViewCell.xib */,
+				9E96115A1F31CE0600BDFE81 /* ZHDeviceTableViewCell.h */,
+				9E96115B1F31CE0600BDFE81 /* ZHDeviceTableViewCell.m */,
+				9E96115C1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.h */,
+				9E96115D1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.m */,
+				9E96115E1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		9E1104091F0A22CF005A084E /* iMCOSDK */ = {
+		9E9611641F31CE3600BDFE81 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9E1104571F0A3946005A084E /* iMCO_RTSDK.framework */,
+				9E9611651F31CE3600BDFE81 /* ZHDeviceModel.h */,
+				9E9611661F31CE3600BDFE81 /* ZHDeviceModel.m */,
+				9E9611671F31CE3600BDFE81 /* ZHFunctionModel.h */,
+				9E9611681F31CE3600BDFE81 /* ZHFunctionModel.m */,
 			);
-			path = iMCOSDK;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		DB15EE50AADC4E3C364A4E7C /* Frameworks */ = {
@@ -415,12 +445,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E1104021F0A2191005A084E /* ZHDeviceActionViewController.xib in Resources */,
+				9E9611541F31CDDA00BDFE81 /* ZHDeviceActionViewController.xib in Resources */,
 				9E1103CA1F0A214D005A084E /* LaunchScreen.storyboard in Resources */,
+				9E9611631F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.xib in Resources */,
+				9E9611461F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle in Resources */,
 				9E1103C71F0A214D005A084E /* Assets.xcassets in Resources */,
-				9E1104051F0A2191005A084E /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */,
+				9E9611471F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */,
+				9E9611521F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.xib in Resources */,
 				9E1103C51F0A214D005A084E /* Main.storyboard in Resources */,
-				9E1104071F0A2191005A084E /* ZHCommandTableViewCell.xib in Resources */,
+				9E9611601F31CE0600BDFE81 /* ZHCommandTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,13 +616,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E1104011F0A2191005A084E /* ZHDeviceActionViewController.m in Sources */,
-				9E1104041F0A2191005A084E /* ZHDeviceModel.m in Sources */,
-				9E1104061F0A2191005A084E /* ZHCommandTableViewCell.m in Sources */,
 				9E1103BF1F0A214D005A084E /* AppDelegate.m in Sources */,
-				9E1104031F0A2191005A084E /* ZHDeviceListTableViewController.m in Sources */,
+				9E96115F1F31CE0600BDFE81 /* ZHCommandTableViewCell.m in Sources */,
+				9E9611551F31CDDA00BDFE81 /* ZHDeviceListTableViewController.m in Sources */,
+				9E9611531F31CDDA00BDFE81 /* ZHDeviceActionViewController.m in Sources */,
+				9E9611621F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.m in Sources */,
+				9E96116A1F31CE3600BDFE81 /* ZHFunctionModel.m in Sources */,
+				9E9611511F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m in Sources */,
 				9E1103BC1F0A214D005A084E /* main.m in Sources */,
-				9E1104081F0A2191005A084E /* ZHDeviceTableViewCell.m in Sources */,
+				9E9611691F31CE3600BDFE81 /* ZHDeviceModel.m in Sources */,
+				9E9611611F31CE0600BDFE81 /* ZHDeviceTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

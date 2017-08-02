@@ -14,7 +14,8 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface ZHDeviceListTableViewController (){
-    NSTimer *timer;
+    
+    
 }
 
 @end
@@ -25,9 +26,11 @@
     [super viewDidLoad];
     self.title = @"Devices";
     self.tableView.tableFooterView = [UIView new];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(clickRightItem:)];
+    
+    self.specialName = nil;
+    self.minRssi = -1;
     self.devices = [NSMutableArray array];
-    
-    
     self.realTekManager = [ZHRealTekDataManager shareRealTekDataManager];
     typeof(self) __weak  weakSelf = self;
     self.realTekManager.disConnectionBlock = ^(ZHRealTekDevice *device, NSError *error){
@@ -47,20 +50,21 @@
     self.realTekManager.blueToothStateUpdateBlock = ^(CBManagerState state){
         if (state != CBManagerStatePoweredOn) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf stopScan];
                 [weakSelf.devices removeAllObjects];
                 [weakSelf.tableView reloadData];
             });
-        }/*else{
-            if (weakSelf.devices.count == 0) {
+        }
+        if (state == CBManagerStatePoweredOff){
+            [SVProgressHUD showInfoWithStatus:@"Bluetooth is off"];
+        }else if (state == CBManagerStatePoweredOn) {
+            if (!weakSelf.realTekManager.isScanning) {
                 [weakSelf startScan];
             }
-        }*/
+        }
     };
     
     
 }
-
 
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -73,12 +77,13 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self startScan];
+     [self startScan];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,6 +91,84 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - Interaction
+-(void)clickRightItem:(id)sender
+{
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"设备过滤", @"Equipment filter") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        
+    }];
+    UIAlertAction *deviceFilterAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"设备名称过滤", @"Device name filtering") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [self deviceFilterAction];
+        [alertView dismissViewControllerAnimated:YES completion:nil];
+    }];
+    UIAlertAction *rssiFilterAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"信号强度过滤", @"Signal strength filtration") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [self rssiFilterAction];
+        [alertView dismissViewControllerAnimated:YES completion:nil];
+    }];
+    UIAlertAction *removeFilterAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"清除过滤", @"Removal filter") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        self.specialName = nil;
+        self.minRssi = -1;
+        [alertView dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alertView addAction:cancelAction];
+    [alertView addAction:deviceFilterAction];
+    [alertView addAction:rssiFilterAction];
+    [alertView addAction:removeFilterAction];
+    [self presentViewController:alertView animated:YES completion:nil];
+}
+
+
+-(void)deviceFilterAction
+{
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Band Name", @"Band Name") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField){
+        textField.placeholder = @"Name";
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        UITextField *nameTextField = [alertView.textFields firstObject];
+        NSString *name = nameTextField.text;
+        self.specialName = name;
+        [self.devices removeAllObjects];
+        [self.tableView reloadData];
+    }];
+    [alertView addAction:cancelAction];
+    [alertView addAction:okAction];
+    [self presentViewController:alertView animated:YES completion:nil];
+
+}
+
+-(void)rssiFilterAction
+{
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Min RSSI", @"Min RSSI") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField){
+        textField.placeholder = @"RSSI";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        UITextField *nameTextField = [alertView.textFields firstObject];
+        NSString *name = nameTextField.text;
+        self.minRssi = labs(name.integerValue);
+        [self.devices removeAllObjects];
+        [self.tableView reloadData];
+    }];
+    [alertView addAction:cancelAction];
+    [alertView addAction:okAction];
+    [self presentViewController:alertView animated:YES completion:nil];
+
+}
 
 #pragma mark - Scan
 -(void)startScan
@@ -98,7 +181,18 @@
     
     [SVProgressHUD showWithStatus:@"Scaning..."];
     [self.realTekManager scanDevice:^(ZHRealTekDevice *device, NSDictionary *advertisementData){
+        NSInteger rssi = labs(device.rssi);
         if (device) {
+            if (self.minRssi>=0) {
+                if (rssi > self.minRssi) {
+                    return ;
+                }
+            }
+            if (self.specialName) {
+                if (![device.name.lowercaseString containsString:self.specialName.lowercaseString]) {
+                    return;
+                }
+            }
             ZHDeviceModel *model = [[ZHDeviceModel alloc]init];
             model.deviceName = device.name;
             model.rssi = device.rssi;
@@ -172,7 +266,6 @@
     
     ZHRealTekDevice *device = [[ZHRealTekDevice alloc]init];
     device.identifier = model.identifier;
-    
     [SVProgressHUD showWithStatus:@"Connecting..."];
     [self.realTekManager connectPeripheral:device options:nil onFinished:^(ZHRealTekDevice *peripheral, NSError *error){
         [self stopScan];
@@ -185,7 +278,6 @@
     }];
     
 }
-
 
 
 

@@ -8,16 +8,22 @@
 
 #import "ZHDeviceActionViewController.h"
 #import "ZHCommandTableViewCell.h"
-#import <iMCO_RTSDK/iMCO_RTSDK.h>
+#import "ZHTitleAndSwitchTableViewCell.h"
+#import "ZHFunctionModel.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <KVNProgress/KVNProgress.h>
+#import <iMCO_RTSDK/iMCO_RTSDK.h>
 
 #define DeviceActionCellIdentifier @"DeviceActionCellIdentifier"
+#define DeviceSwitchCellIdentifier @"DeviceSwitchCellIdentifier"
 
 #define TestUserIdentifier @"a_test_user"
 
-@interface ZHDeviceActionViewController ()
+
+#import "ZHChooseFirmwareTableViewController.h"
+@interface ZHDeviceActionViewController ()<ZHBandSwitchPropertyProtocol>
 @property (nonatomic, strong) ZHRealTekSportItem *currentSportItem;
+@property (nonatomic) NSInteger sitTime;
 @end
 
 @implementation ZHDeviceActionViewController
@@ -34,8 +40,8 @@
     self.showTableView.tableHeaderView = headerLabel;
     self.showTableView.tableFooterView = [UIView new];
     [self.showTableView registerNib:[UINib nibWithNibName:@"ZHCommandTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:DeviceActionCellIdentifier];
-    
-    
+    [self.showTableView registerNib:[UINib nibWithNibName:@"ZHTitleAndSwitchTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:DeviceSwitchCellIdentifier];
+    [self initialData];
     //Commands
     self.commands =@[@"绑定命令",@"设置命令",@"运动数据命令",@"辅助命令",@"固件升级命令", @"测试命令"];
     
@@ -46,7 +52,7 @@
     [self.commandkeys addObject:[self getSportCommandKeys]];
     [self.commandkeys addObject:[self getAssistCommandKeys]];
     [self.commandkeys addObject:[self getOTACommandKeys]];
-    //[self.commandkeys addObject:[self getTestCommandKeys]];
+    [self.commandkeys addObject:[self getTestCommandKeys]];
     
     
 
@@ -66,6 +72,14 @@
                 NSString *info = [NSString stringWithFormat:@"Receive Camera mode update numers %ld",(long)num];
                 [SVProgressHUD showInfoWithStatus:info];
             }
+        });
+    };
+    
+    [ZHRealTekDataManager shareRealTekDataManager].stopMeasuringHRBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *info = [NSString stringWithFormat:@"Receive The device stops measuring the heart rate callbacks"];
+            [SVProgressHUD showInfoWithStatus:info];
+            
         });
     };
     
@@ -93,7 +107,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    ZHRealTekDataManager *manager = [ZHRealTekDataManager shareRealTekDataManager];
+    /*ZHRealTekDataManager *manager = [ZHRealTekDataManager shareRealTekDataManager];
     if (manager.connectedDevice) {
         [manager cancelPeripheralConnection:manager.connectedDevice onFinished:^(ZHRealTekDevice *device, NSError *error){
             if (error) {
@@ -102,7 +116,7 @@
                 });
             }
         }];
-    }
+    }*/
 }
 
 
@@ -112,36 +126,88 @@
 }
 
 
+#pragma mark - Initial Data
+-(void)initialData
+{
+    self.sitTime = 30;
+}
+
 #pragma mark - Get Command Keys
 
 -(NSArray *)getBindCommandKeys
 {
-    return @[@"登录",@"绑定用户",@"解除绑定",@"断开连接"];
+    ZHFunctionModel *login = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"登录", @"Login") cellMode:ZHOnlyTitle functionMode:ZHLogin];
+    ZHFunctionModel *bind = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"绑定用户", @"Bind User") cellMode:ZHOnlyTitle functionMode:ZHBind];
+    ZHFunctionModel *cancelBind = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"解除绑定", @"Cancel Bind") cellMode:ZHOnlyTitle functionMode:ZHCancelBind];
+    ZHFunctionModel *cancelConnect = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"断开连接", @"Cancel Connect") cellMode:ZHOnlyTitle functionMode:ZHCancelConnect];
+    
+    return @[login,bind,cancelBind,cancelConnect];
 }
 
 -(NSArray *)getSetCommandKeys
 {
-    return @[@"时间设置",@"闹钟设置",@"获取闹钟列表请求",@"计步目标设定",@"用户Profile设置",@"防丢设置",@"久坐提醒",@"获取久坐提醒",@"手机操作系统设置",@"进入拍照模式",@"退出拍照模式",@"开启抬手亮屏",@"获取抬手亮屏开关",@"开启QQ提醒",@"开启微信提醒",@"开启短信提醒",@"开启Line提醒"];
+    ZHFunctionModel *synTime = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"同步时间", @"SynTime") cellMode:ZHOnlyTitle functionMode:ZHSynTime];
+    ZHFunctionModel *setAlarm = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"设置闹钟", @"SetAlarms") cellMode:ZHOnlyTitle functionMode:ZHSynAlarm];
+    ZHFunctionModel *getAlarms = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取闹钟列表", @"GetAlarms") cellMode:ZHOnlyTitle functionMode:ZHGetAlarms];
+    ZHFunctionModel *setStepTarget = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"计步目标设定", @"Set Step Target") cellMode:ZHOnlyTitle functionMode:ZHSetStepTarget];
+    ZHFunctionModel *setUserProfile = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"用户信息设置", @"Syn User Profile") cellMode:ZHOnlyTitle functionMode:ZHSynUserProfile];
+    ZHFunctionModel *sittingRemider = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"久坐提醒", @"Long Sit Remider") cellMode:ZHTitleAndSwith functionMode:ZHSetSittingReminder];
+    ZHFunctionModel *getSittingRemider = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取久坐提醒", @"Get Long Sit Remider") cellMode:ZHOnlyTitle functionMode:ZHGetSittingReminder];
+    ZHFunctionModel *synPhoneSystem = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"手机操作系统设置", @"Set Mobile System") cellMode:ZHOnlyTitle functionMode:ZHSetMobileSystem];
+    ZHFunctionModel *enterPhotoMode = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"进入拍照模式", @"Enter Camera Mode") cellMode:ZHOnlyTitle functionMode:ZHEnterPhotoMode];
+    ZHFunctionModel *exitPhotoMode = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"退出拍照模式", @"Exit Photo Mode") cellMode:ZHOnlyTitle functionMode:ZHExitPhotoMode];
+    ZHFunctionModel *RHLightScreen = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"抬手亮屏", @"Raise Hand Light Screen") cellMode:ZHTitleAndSwith functionMode:ZHSetRaiseHandLight];
+    ZHFunctionModel *getRHLightScreenSetting = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取抬手亮屏状态", @"Get Raise Hand Light Screen Status") cellMode:ZHOnlyTitle functionMode:ZHGetRaiseHandLightSet];
+    ZHFunctionModel *qqReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"QQ提醒", @"QQ Reminder") cellMode:ZHTitleAndSwith functionMode:ZHQQReminder];
+    ZHFunctionModel *wechatReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"微信提醒", @"Wechat Reminder") cellMode:ZHTitleAndSwith functionMode:ZHWeChatReminder];
+    ZHFunctionModel *smsReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"短信提醒", @"SMS Reminder") cellMode:ZHTitleAndSwith functionMode:ZHSMSReminder];
+    ZHFunctionModel *lineReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"Line提醒", @"Line Reminder") cellMode:ZHTitleAndSwith functionMode:ZHLineReminder];
+    ZHFunctionModel *incomingReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"来电提醒", @"inComing Reminder") cellMode:ZHTitleAndSwith functionMode:ZHIncomingReminder];
+    return @[synTime,setAlarm,getAlarms,setStepTarget,setUserProfile,sittingRemider,getSittingRemider,synPhoneSystem,enterPhotoMode,exitPhotoMode,RHLightScreen,getRHLightScreenSetting,qqReminder,wechatReminder,smsReminder,lineReminder,incomingReminder];
 }
+
+
 
 -(NSArray *)getSportCommandKeys
 {
-    return @[@"请求历史数据",@"请求实时计步数据",@"请求一次心率数据",@"请求连续的心率数据",@"获取连续心率设置是否开启",@"当天数据同步",@"最近数据同步"];
+    ZHFunctionModel *hisData = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"同步历史数据", @"Syn History data") cellMode:ZHOnlyTitle functionMode:ZHGetHistoryData];
+    ZHFunctionModel *realTimeData = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"开启实时数据同步", @"Open RealTime data synchronies") cellMode:ZHOnlyTitle functionMode:ZHGetRealTimeData];
+    ZHFunctionModel *getOnceHeartRate = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"请求一次心率数据", @"Get Once Heart Rate Data") cellMode:ZHOnlyTitle functionMode:ZHOnceHR];
+    ZHFunctionModel *getContinuousHR = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"心率数据连续测量", @"Get Continuous Heart Rate Data") cellMode:ZHTitleAndSwith functionMode:ZHContinuousHR];
+    ZHFunctionModel *getContinuousHRSitting = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取连续心率设置是否开启", @"Get Continuous Heart Rate Setting") cellMode:ZHOnlyTitle functionMode:ZHGetContinuousHRSetting];
+    return @[hisData,realTimeData,getOnceHeartRate,getContinuousHR,getContinuousHRSitting];
+    
 }
 
 -(NSArray *)getAssistCommandKeys
 {
-    return @[@"找到我的手环",@"修改设备名称",@"获取设备名称",@"获取电量等级",@"获取固件App版本",@"获取固件Patch版本",@"获取固件Mac地址"];
+    ZHFunctionModel *findBand = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"查找我的手环", @"Find My Band") cellMode:ZHOnlyTitle functionMode:ZHFindBand];
+    ZHFunctionModel *modifyDeviceName = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"修改设备名称", @"Modify Device Name") cellMode:ZHOnlyTitle functionMode:ZHSetBandName];
+    ZHFunctionModel *getBandDeviceName = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取设备名称", @"Get Device Name") cellMode:ZHOnlyTitle functionMode:ZHGetBandName];
+    ZHFunctionModel *getBattery = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取电量等级", @"Get Battery") cellMode:ZHOnlyTitle functionMode:ZHGetBattery];
+    ZHFunctionModel *getAppVersion = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取固件App版本", @"Get Firmware App Version") cellMode:ZHOnlyTitle functionMode:ZHGetAppVersion];
+    ZHFunctionModel *getPatchVersion = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取固件Patch版本", @"Get Firmware Patch Version") cellMode:ZHOnlyTitle functionMode:ZHGetPatchVersion];
+    ZHFunctionModel *getMacAddress = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取固件Mac地址", @"Get Firmware Mac Address") cellMode:ZHOnlyTitle functionMode:ZHGetMacAddress];
+    ZHFunctionModel *getSDKVersion = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取SDK版本", @"Get SDK Version") cellMode:ZHOnlyTitle functionMode:ZHGetSDKVersion];
+    return @[findBand,modifyDeviceName,getBandDeviceName,getBattery,getAppVersion,getPatchVersion,getMacAddress,getSDKVersion];
 }
+
+
 
 -(NSArray *)getOTACommandKeys
 {
-    return @[@"检测固件是否有更新",@"开始固件升级"];
+    ZHFunctionModel *checkOTAUpdate = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"检测固件是否有更新", @"Check for firmware updates") cellMode:ZHOnlyTitle functionMode:ZHCheckOTAVersion];
+    ZHFunctionModel *updateFirmWare = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"开始固件升级", @"Begin Update Firmware") cellMode:ZHOnlyTitle functionMode:ZHUpdateOTA];
+    return @[checkOTAUpdate,updateFirmWare];
 }
+
 
 -(NSArray *)getTestCommandKeys
 {
-    return @[@"马达震动",@"获取升级固件信息"];
+    ZHFunctionModel *testUpdateOTA = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"选择固件进行升级", @"Choose OTA Update") cellMode:ZHOnlyTitle functionMode:ZHTestUpdateOTA];
+    ZHFunctionModel *multiBleCommands = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"同时发送多个命令", @"同时发送多个命令") cellMode:ZHOnlyTitle functionMode:ZHTestMultiCmd];
+    
+    return @[testUpdateOTA,multiBleCommands];
 }
 
 
@@ -151,6 +217,7 @@
 {
     return self.commands.count;
 }
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -162,11 +229,13 @@
         return 0;
 }
 
+
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *command = [self.commands objectAtIndex:section];
     return command;
 }
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -184,25 +253,36 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
-    NSString *keyString = [keys objectAtIndex:indexPath.row];
-    ZHCommandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DeviceActionCellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = keyString;
-    cell.detailTextLabel.text = nil;
-    if (indexPath.section == 2 && indexPath.row == 1) {
-        if (self.currentSportItem) {
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+    if (functionModel.cellMode == ZHOnlyTitle) {
+        ZHCommandTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DeviceActionCellIdentifier forIndexPath:indexPath];
+        cell.textLabel.text = functionModel.title;
+        cell.detailTextLabel.text = nil;
+        if (self.currentSportItem && (functionModel.functionMode == ZHGetRealTimeData)) {
             NSString *detail = [NSString stringWithFormat:@"Time:%@-StepCount:%ld-Calories:%ld-Distance:%ld",self.currentSportItem.date,(long)self.currentSportItem.stepCount,(long)self.currentSportItem.calories,(long)self.currentSportItem.distance];
             cell.detailTextLabel.text = detail;
-
         }
-        
+        return cell;
+    }else{
+        ZHTitleAndSwitchTableViewCell *switchCell = [tableView dequeueReusableCellWithIdentifier:DeviceSwitchCellIdentifier forIndexPath:indexPath];
+        switchCell.delegate = self;
+        switchCell.titleLabel.text = functionModel.title;
+        return switchCell;
     }
-    return cell;
+   
+   
 }
 
 
 #pragma mark - TableView delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+    if (functionModel.cellMode == ZHTitleAndSwith) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell setSelected:NO animated:NO];
+    }
     if (indexPath.section == 0) {
         [self sendBindCommandWithIndexPath:indexPath];
     }else if (indexPath.section == 1) {
@@ -244,23 +324,26 @@
 //Bind Command
 -(void)sendBindCommandWithIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+    
+    switch (functionModel.functionMode) {
+        case ZHLogin:{
             [self loginWithIdentifier:TestUserIdentifier];
         }
             break;
-        case 1:{ //Bind device
+        case ZHBind:{ //Bind device
             [self bindDeviceWithIdentifier:TestUserIdentifier];
             
         }
             break;
             
-        case 2:{//Unbind device
+        case ZHCancelBind:{//Unbind device
             [self unBind];
         }
             break;
         
-        case 3:{// Cancel connect
+        case ZHCancelConnect:{// Cancel connect
             [self cancelConnect];
         }
             break;
@@ -273,79 +356,62 @@
 //Set Command
 -(void)sendSetCommandWithIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{ //Syn Time
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+    switch (functionModel.functionMode) {
+        case ZHSynTime:{ //Syn Time
             [self synTime];
         }
             break;
             
-        case 1:{ // Set Alarms
+        case ZHSynAlarm:{ // Set Alarms
             [self setAlarms];
         }
             break;
             
-        case 2:{// get Alarms
+        case ZHGetAlarms:{// get Alarms
             [self getAlarms];
         }
             break;
             
-        case 3:{// Set Step Target
+        case ZHSetStepTarget:{// Set Step Target
             [self setStepTarget];
         }
             break;
-        case 4:{// set user profile
+        case ZHSynUserProfile:{// set user profile
             [self setUserProfile];
         }
             break;
-        case 5:{// Loss Alert set
+        case ZHSetlost:{// Loss Alert set
             [self setLossLevel];
         }
             break;
-        case 6:{// Long Sit Remind
-            [self setLongSitRemind];
-        }
-            break;
-        case 7:{// Get Long Sit Remind Data
+        
+        case ZHGetSittingReminder:{// Get Long Sit Remind Data
             [self getLongSitRemind];
         }
             break;
-        case 8:{// Set OS
+        case ZHSetMobileSystem:{// Set OS
             [self setOS];
         }
             break;
-        case 9:{ //  enter camera mode
+        case ZHEnterPhotoMode:{ //  enter camera mode
             [self enterCameraMode];
         }
             break;
-        case 10:{ // quit camera mode
+        case ZHExitPhotoMode:{ // quit camera mode
             [self quitCameraMode];
         }
             break;
-        case 11:{ // Set Turn Wrist Light
-            [self turnWirstLight];
-        }
-            break;
-        case 12:{ // Get Turn Wrist Light
+       
+        case ZHGetRaiseHandLightSet:{ // Get Turn Wrist Light
             [self getTurnWristLight];
         }
             break;
-        case 13:{ // Set QQ Notification
-            [self setQQNotification];
+        case ZHSetSittingReminder:{
+            [self setLongSit:[self.showTableView cellForRowAtIndexPath:indexPath]];
         }
             break;
-        case 14:{ // Set Wechat Notification
-            [self setWechatNotification];
-        }
-            break;
-        case 15:{ // Set SMS Notification
-            [self setSMSNotification];
-        }
-            break;
-        case 16:{ // Set Line Notification
-            [self setLineNotification];
-        }
-            break;
-       
         default:
             break;
     }
@@ -356,33 +422,21 @@
 //Sport Command
 -(void)sendSportCmmandWithIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{ // get his data
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+
+    switch (functionModel.functionMode) {
+        case ZHGetHistoryData:{ // get his data
             [self getHisData];
         }
             break;
-        case 1:{// get realtime step data
-            [self getRealTimeStepData:indexPath];
-        }
-            break;
-        case 2:{ // enable to obtain a heart rate data
+        case ZHOnceHR:{ // enable to obtain a heart rate data
             [self getOneceHeartRate];
         }
             break;
-        case 3:{ // Request the continuous heart rate data.
-            [self getContinuousHeartRate];
-        }
-            break;
-        case 4:{ // Gets whether to open continuous measurement of heart rate function.
+        
+        case ZHGetContinuousHRSetting:{ // Gets whether to open continuous measurement of heart rate function.
             [self getContinuousHeartRateSetting];
-        }
-            break;
-        case 5:{ // Syn Today Data
-            [self synTodayData];
-        }
-            break;
-        case 6:{ // Syn Recent Data
-            [self synRecentData];
         }
             break;
         default:
@@ -395,35 +449,42 @@
 #pragma mark assist Command
 -(void)sendAssistCommandWithIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{// find me
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+    switch (functionModel.functionMode) {
+        case ZHFindBand:{// find me
             [self findDevice];
         }
             break;
-        case 1: { // modify device name
+        case ZHSetBandName: { // modify device name
             [self modifyName];
         }
             break;
-        case 2:{// get device name
+        case ZHGetBandName:{// get device name
             [self getdeviceName];
         }
             break;
-        case 3:{ // get battery level
+        case ZHGetBattery:{ // get battery level
             [self getBatteryLevel];
         }
             break;
-        case 4:{ // get FirmWare app version
+        case ZHGetAppVersion:{ // get FirmWare app version
             [self getFirmWareAppVersion];
         }
             break;
-        case 5:{ // get FirmWare patch version
+        case ZHGetPatchVersion:{ // get FirmWare patch version
             [self getFirmWarePatchVersion];
         }
             break;
-        case 6:{ // get FirmWare MacAdress
+        case ZHGetMacAddress:{ // get FirmWare MacAdress
             [self getFirmWareMacAdress];
         }
             break;
+        case ZHGetSDKVersion:{ // get SDK Version
+            [self getSDKVersion];
+        }
+            break;
+            
         default:
             break;
     }
@@ -433,19 +494,19 @@
 #pragma mark - OTA Command
 -(void)sendFirmwareCommandWithIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{ // Check to see if the firmware needs to be updated.
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+
+    switch (functionModel.functionMode) {
+        case ZHCheckOTAVersion:{ // Check to see if the firmware needs to be updated.
             [self checkFirmWareUpdate];
         }
             break;
-        case 1:{ // Begin firmWare Update
+        case ZHUpdateOTA:{ // Begin firmWare Update
             [self beginUpdateFirmWare];
         }
             break;
-        case 2:{ // Test Enter OTA Mode
-            [self enterOTAMode];
-        }
-            break;
+        
             
             
         default:
@@ -456,22 +517,19 @@
 #pragma mark Test Command
 -(void)sendTestCommandWithIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{//震动
-            [[ZHRealTekDataManager shareRealTekDataManager]sendShakeCommandonFinished:^(ZHRealTekDevice *device, NSError *error, id result){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (error) {
-                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-                    }else{
-                        [SVProgressHUD showInfoWithStatus:@"Shake Cmd send success"];
-                    }
-                });
-               
-            }];
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+    switch (functionModel.functionMode) {
+        case ZHEnterOTAMode:{ // Test Enter OTA Mode
+            [self enterOTAMode];
         }
             break;
-        case 1:{// 获取固件信息
-            return;
+        case ZHTestUpdateOTA:{ // Test Use Special Firmware Update.
+            [self gotoTestUpdateOTA];
+        }
+            break;
+        case ZHTestMultiCmd:{ // Test Multiple commands
+            [self sendMultipleCommands];
         }
             break;
         default:
@@ -485,6 +543,7 @@
 #pragma mark - Login Bind disconnect function
 -(void)loginWithIdentifier:(NSString *)identifier
 {
+    [SVProgressHUD show];
     [[ZHRealTekDataManager shareRealTekDataManager]loginDeviceWithIdentifier:identifier onFinished:^(ZHRealTekDevice *device, NSError *error,id result){
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -607,17 +666,37 @@
 
 -(void)modifyName
 {
-    NSString *name = @"Zhuo";
-    [SVProgressHUD show];
-    [[ZHRealTekDataManager shareRealTekDataManager]modifyDeviceName:name onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error) {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            }else{
-                [SVProgressHUD showSuccessWithStatus:@"Modify device name success"];
-            }
-        });
+    
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Band Name", @"Band Name") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField){
+       textField.placeholder = @"Name";
+       
     }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [SVProgressHUD show];
+        UITextField *nameTextField = [alertView.textFields firstObject];
+        NSString *name = nameTextField.text;
+        if (name && name.length > 0) {
+            [[ZHRealTekDataManager shareRealTekDataManager]modifyDeviceName:name onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error) {
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    }else{
+                        [SVProgressHUD showSuccessWithStatus:@"Modify device name success"];
+                    }
+                });
+            }];
+ 
+        }
+        
+    }];
+    [alertView addAction:cancelAction];
+    [alertView addAction:okAction];
+    [self presentViewController:alertView animated:YES completion:nil];
+    
 }
 
 
@@ -717,27 +796,48 @@
 
 -(void)setStepTarget
 {
-    [SVProgressHUD show];
-    uint32_t stepTarget = 10000;
-    [[ZHRealTekDataManager shareRealTekDataManager]setStepTarget:stepTarget onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error) {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            }else{
-                [SVProgressHUD showSuccessWithStatus:@"Set StepTarget Success"];
-            }
-
-        });
+    
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Step Target", @"Step Target") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField){
+        textField.placeholder = @"Steps";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
         
     }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        UITextField *nameTextField = [alertView.textFields firstObject];
+        NSString *name = nameTextField.text;
+        if (name && name.length > 0) {
+            [SVProgressHUD show];
+            uint32_t stepTarget = [name intValue];
+            [[ZHRealTekDataManager shareRealTekDataManager]setStepTarget:stepTarget onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error) {
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    }else{
+                        [SVProgressHUD showSuccessWithStatus:@"Set StepTarget Success"];
+                    }
+                    
+                });
+                
+            }];
+            
+        }
+        
+    }];
+    [alertView addAction:cancelAction];
+    [alertView addAction:okAction];
+    [self presentViewController:alertView animated:YES completion:nil];
+    
 }
 
 -(void)setUserProfile
 {
     ZH_RealTek_Gender gender = 1;
-    uint8_t age = 18;
+    uint8_t age = 20;
     float height = 170;
-    float weight = 40;
+    float weight = 50;
     [SVProgressHUD show];
     [[ZHRealTekDataManager shareRealTekDataManager]setUserProfileWithGender:gender withAge:age withHeight:height withWeight:weight onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -768,12 +868,53 @@
 }
 
 
-
--(void)setLongSitRemind
+-(void)setLongSit:(UITableViewCell *)cell
 {
+    ZHTitleAndSwitchTableViewCell *switchCell = (ZHTitleAndSwitchTableViewCell *)cell;
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Set Time", @"Set Time") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField){
+        textField.placeholder = @"time";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        UITextField *nameTextField = [alertView.textFields firstObject];
+        NSString *time = nameTextField.text;
+        if (time && time.length > 0) {
+            self.sitTime = time.integerValue;
+            ZHRealTekLongSit *sit = [[ZHRealTekLongSit alloc]init];
+            sit.onEnable = switchCell.switchView.on;
+            sit.sitTime = self.sitTime;
+            [SVProgressHUD show];
+            [[ZHRealTekDataManager shareRealTekDataManager]setLongSitRemind:sit onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error) {
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    }else{
+                        [SVProgressHUD showSuccessWithStatus:@"Set Long Sit Success"];
+                    }
+                });
+                
+            }];
+
+            
+        }
+        
+    }];
+    [alertView addAction:cancelAction];
+    [alertView addAction:okAction];
+    [self presentViewController:alertView animated:YES completion:nil];
+}
+
+
+-(void)setLongSitRemind:(BOOL)onEable
+{
+    
     ZHRealTekLongSit *sit = [[ZHRealTekLongSit alloc]init];
-    sit.onEnable = YES;
-    sit.sitTime = 10;
+    sit.onEnable = onEable;
+    sit.sitTime = self.sitTime;
     [SVProgressHUD show];
     [[ZHRealTekDataManager shareRealTekDataManager]setLongSitRemind:sit onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -783,8 +924,9 @@
                 [SVProgressHUD showSuccessWithStatus:@"Set Long Sit Success"];
             }
         });
-
+        
     }];
+
 }
 
 -(void)getLongSitRemind
@@ -859,10 +1001,10 @@
 }
 
 
--(void)turnWirstLight
+-(void)turnWirstLight:(BOOL)onEable
 {
     [SVProgressHUD show];
-    BOOL enable = YES;
+    BOOL enable = onEable;
     [[ZHRealTekDataManager shareRealTekDataManager]setTurnWristLightEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
@@ -891,10 +1033,10 @@
     }];
 }
 
--(void)setQQNotification
+-(void)setQQNotification:(BOOL)onEable
 {
     [SVProgressHUD show];
-    BOOL enable = YES;
+    BOOL enable = onEable;
     [[ZHRealTekDataManager shareRealTekDataManager] setEnableQQNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
@@ -907,10 +1049,10 @@
     }];
 }
 
--(void)setWechatNotification
+-(void)setWechatNotification:(BOOL)onEable
 {
     [SVProgressHUD show];
-    BOOL enable = YES;
+    BOOL enable = onEable;
     [[ZHRealTekDataManager shareRealTekDataManager] setEnableWechatNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
@@ -924,10 +1066,10 @@
 
 }
 
--(void)setSMSNotification
+-(void)setSMSNotification:(BOOL)onEable
 {
     [SVProgressHUD show];
-    BOOL enable = YES;
+    BOOL enable = onEable;
     [[ZHRealTekDataManager shareRealTekDataManager] setEnableSMSNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
@@ -941,10 +1083,10 @@
 
 }
 
--(void)setLineNotification
+-(void)setLineNotification:(BOOL)onEable
 {
     [SVProgressHUD show];
-    BOOL enable = YES;
+    BOOL enable = onEable;
     [[ZHRealTekDataManager shareRealTekDataManager] setEnableLineNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
@@ -956,6 +1098,22 @@
         
     }];
 
+}
+
+
+-(void)setCallNotification:(BOOL)onEable
+{
+    [SVProgressHUD show];
+    BOOL enable = onEable;
+    [[ZHRealTekDataManager shareRealTekDataManager]setEnableCallNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"Set Call Notification Success"];
+            }
+        });
+    }];
 }
 
 -(void)getHisData
@@ -983,60 +1141,9 @@
 }
 
 
--(void)synTodayData
+-(void)getRealTimeStepData:(BOOL)onEable
 {
-    [SVProgressHUD show];
-    [[ZHRealTekDataManager shareRealTekDataManager]synTodayDataOnFinished:^(ZHRealTekDevice *device, NSError *error, id result)
-     {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             if (error) {
-                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-             }else{
-                 if (result) {
-                     NSArray *sports = [result objectForKey:ZH_RealTek_HisSportsKey];
-                     NSArray *sleeps = [result objectForKey:ZH_RealTek_HisSleepsKey];
-                     NSString *info = [NSString stringWithFormat:@"Get Today Data Success,sports count:%ld,sleeps count:%ld",(long)sports.count,(long)sleeps.count];
-                     [SVProgressHUD showSuccessWithStatus:info];
-                 }else{
-                     [SVProgressHUD showSuccessWithStatus:@"Get Today Data failed"];
-                 }
-                 
-             }
-         });
-         
-     }];
-
-}
-
-
--(void)synRecentData
-{
-    [SVProgressHUD show];
-    [[ZHRealTekDataManager shareRealTekDataManager]synRecentDataOnFinished:^(ZHRealTekDevice *device, NSError *error, id result)
-     {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             if (error) {
-                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-             }else{
-                 if (result) {
-                     NSArray *sports = [result objectForKey:ZH_RealTek_HisSportsKey];
-                     NSArray *sleeps = [result objectForKey:ZH_RealTek_HisSleepsKey];
-                     NSString *info = [NSString stringWithFormat:@"Get Recent Data Success,sports count:%ld,sleeps count:%ld",(long)sports.count,(long)sleeps.count];
-                     [SVProgressHUD showSuccessWithStatus:info];
-                 }else{
-                     [SVProgressHUD showSuccessWithStatus:@"Get Recent Data failed"];
-                 }
-                 
-             }
-         });
-         
-     }];
-
-}
-
--(void)getRealTimeStepData:(NSIndexPath *)indexPath
-{
-    BOOL onOff = YES;
+    BOOL onOff = onEable;
     [SVProgressHUD show];
     [[ZHRealTekDataManager shareRealTekDataManager]setRealTimeSynSportData:onOff onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1077,10 +1184,10 @@
 }
 
 
--(void)getContinuousHeartRate
+-(void)getContinuousHeartRate:(BOOL)onEable
 {
     [SVProgressHUD show];
-    BOOL enable = YES;
+    BOOL enable = onEable;
     uint8_t minute = 1;
      [[ZHRealTekDataManager shareRealTekDataManager]setRealTimeSynSportData:YES onFinished:^(ZHRealTekDevice *de, NSError *er , id res){
          if (!er) {
@@ -1193,27 +1300,35 @@
             }
         });
     }];
+}
 
+-(void)getSDKVersion
+{
+    NSString *version = [[ZHRealTekDataManager shareRealTekDataManager]iMCOSDKVersion];
+    [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"SDK Verion:%@",version]];
 }
 
 -(void)checkFirmWareUpdate
 {
-    [SVProgressHUD showInfoWithStatus:@"The feature is temporarily not implemented."];
-}
-
--(void)enterOTAMode
-{
+    //[SVProgressHUD showInfoWithStatus:@"The feature is temporarily not implemented."];
     [SVProgressHUD show];
-    [[ZHRealTekDataManager shareRealTekDataManager]enterOTAModeonFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+    [[ZHRealTekDataManager shareRealTekDataManager]checkFirmWareHaveNewVersionWithUserId:nil onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {
                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             }else{
-                [SVProgressHUD showSuccessWithStatus:@"Enter OTA Mode Success"];
+                NSInteger code = [result integerValue];
+                if (code == ZH_Realtek_FirmWare_HaveNewVersion) {
+                    [SVProgressHUD showInfoWithStatus:@"FirmWare Have New Version"];
+                }else{
+                    [SVProgressHUD showInfoWithStatus:@"FirmWare is New Version"];
+                }
             }
         });
+        
     }];
 }
+
 
 -(void)beginUpdateFirmWare
 {
@@ -1221,18 +1336,20 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (status == RealTek_FirmWare_Update_Failed) {
                 if (error) {
-                    [KVNProgress showErrorWithStatus:error.localizedDescription];
+                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                 }else{
-                    [KVNProgress showErrorWithStatus:@"Update Failed"];
+                    [SVProgressHUD showErrorWithStatus:@"Update Failed"];
                 }
+            }else if (status == RealTek_FirmWare_Loading_OTA){
+                [SVProgressHUD showProgress:progress status:@"Load OTA Data Progress"];
             }else if(status == RealTek_FirmWare_Updateing) {
-                [KVNProgress showProgress:progress status:@"Transfer data Progress"];
+                [SVProgressHUD showProgress:progress status:@"Transfer data Progress"];
             }else if (status == RealTek_FirmWare_Update_Finished){
-                [KVNProgress showWithStatus:@"Data transfer complete"];
+                [SVProgressHUD showInfoWithStatus:@"Data transfer complete"];
             }else if (status == RealTek_FirmWare_Update_Restart){
-                [KVNProgress showWithStatus:@"Wait for the reboot"];
+                [SVProgressHUD showInfoWithStatus:@"Wait for the reboot"];
             }else if (status == RealTek_FirmWare_Update_Success){
-                [KVNProgress showSuccessWithStatus:@"Update Success"];
+                [SVProgressHUD showSuccessWithStatus:@"Update Success"];
             }
         });
     }];
@@ -1283,6 +1400,90 @@
 }
 
 
+#pragma mark - Test Commands
+-(void)enterOTAMode
+{
+    [SVProgressHUD show];
+    [[ZHRealTekDataManager shareRealTekDataManager]enterOTAModeonFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"Enter OTA Mode Success"];
+            }
+        });
+    }];
+}
+
+-(void)gotoTestUpdateOTA
+{
+    ZHChooseFirmwareTableViewController *chooseFirmWare = [[ZHChooseFirmwareTableViewController alloc]initWithNibName:@"ZHChooseFirmwareTableViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:chooseFirmWare animated:YES];
+}
+
+-(void)sendMultipleCommands
+{
+     [self synTime];
+     [self setAlarms];
+     [self getAlarms];
+     //[self setStepTarget];
+     [self setUserProfile];
+     [self getLongSitRemind];
+     //[self setOS];
+     [self getTurnWristLight];
+         
+}
+
+#pragma mark ZHBandSwitchPropertyProtocol
+-(void)handleSWitchActionWithCell:(UITableViewCell *)cell
+{
+    NSIndexPath *indexPath = [self.showTableView indexPathForCell:cell];
+    NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
+    ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
+    ZHTitleAndSwitchTableViewCell *switchCell = (ZHTitleAndSwitchTableViewCell *)cell;
+    BOOL enAble = switchCell.switchView.on;
+    switch (functionModel.functionMode) {
+        case ZHSetSittingReminder:{// Long Sit Remind
+            [self setLongSitRemind:enAble];
+        }
+            break;
+        case ZHSetRaiseHandLight:{ // Set Turn Wrist Light
+            [self turnWirstLight:enAble];
+        }
+            break;
+        case ZHQQReminder:{ // Set QQ Notification
+            [self setQQNotification:enAble];
+        }
+            break;
+        case ZHWeChatReminder:{ // Set Wechat Notification
+            [self setWechatNotification:enAble];
+        }
+            break;
+        case ZHSMSReminder:{ // Set SMS Notification
+            [self setSMSNotification:enAble];
+        }
+            break;
+        case ZHLineReminder:{ // Set Line Notification
+            [self setLineNotification:enAble];
+        }
+            break;
+        case ZHIncomingReminder:{ // Set Call Notification
+            [self setCallNotification:enAble];
+        }
+            break;
+        case ZHGetRealTimeData:{// get realtime step data
+            [self getRealTimeStepData:enAble];
+        }
+            break;
+        case ZHContinuousHR:{ // Request the continuous heart rate data.
+            [self getContinuousHeartRate:enAble];
+        }
+            break;
+
+        default:
+            break;
+    }
+}
 /*
 #pragma mark - Navigation
 

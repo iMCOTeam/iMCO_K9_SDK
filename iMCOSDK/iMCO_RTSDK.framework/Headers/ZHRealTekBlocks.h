@@ -16,3 +16,4 @@ typedef void (^ZHRealTekSportDataUpdateBlock)(ZHRealTekDevice *device, NSError*e
 typedef void (^ZHRealTekCameraUpdateBlock)(ZHRealTekDevice *device, NSError *error);
 typedef void (^ZHRealTekUpdateFirmwareProgressBlock)(ZHRealTekDevice *device, NSError *error, ZH_RealTek_FirmWare_Update_Status status,float progress);
 typedef void (^ZHRealTekBlueToothStateDidUpdatedBlock)(CBManagerState state);
+typedef void (^ZHRealTekHaveFindWriteCharacteristic)(ZHRealTekDevice *device, CBCharacteristic *writeCharacteristic);

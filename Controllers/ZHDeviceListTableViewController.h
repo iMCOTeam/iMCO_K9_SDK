@@ -14,5 +14,6 @@
 @interface ZHDeviceListTableViewController : UITableViewController
 @property(nonatomic, strong) NSMutableArray *devices;
 @property(nonatomic, strong) ZHRealTekDataManager *realTekManager;
-
+@property(nonatomic, strong) NSString *specialName;//用来过滤设备名称
+@property(nonatomic) NSInteger minRssi;//用来过滤信号强度
 @end

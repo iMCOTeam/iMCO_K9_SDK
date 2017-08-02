@@ -15,6 +15,7 @@
 #define ZHRealTekReceiveTodayStepDataNotification @"ZHRealTekReceiveTodayStepDataNotification"
 #define ZHRealTekReceiveHisStepDataNotification @"ZHRealTekReceiveHisStepDataNotification"
 #define ZHRealTekReceiveHisSleepDataNotification @"ZHRealTekReceiveHisSleepDataNotification"
+#define iMCOServerHost @"https://fota.aimoketechnology.com"
 
 extern NSString *const ZH_RealTek_HisSportsKey; // Historical sport Data key.
 extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
@@ -28,10 +29,11 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
 @property (nonatomic, copy) ZHRealTekCameraUpdateBlock cameraModeUpdateBlock; // When you enter the photo mode, the receiving device takes a photo status.
 
 @property (nonatomic, copy) ZHRealTekSportDataUpdateBlock heartRateDataUpdateBlock; // Heart rate data updated call back. result is array.
+@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock stopMeasuringHRBlock; //The device stops measuring the heart rate callbacks.
 @property (nonatomic, copy) ZHRealTekBlueToothStateDidUpdatedBlock blueToothStateUpdateBlock; ////The current state of the manager updated block.
-
 @property (nonatomic) BOOL isSyningSportData;// Whether the motion data is being synchronized.
 @property (nonatomic) BOOL isBound;//judgment is bound.
+@property (nonatomic) BOOL isScanning;//Whether or not the central is currently scanning.
 @property(nonatomic, assign) CBManagerState blueToothState; //The current state of the manager.
 
 
@@ -354,25 +356,6 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
 
 
 
-/**
- Synchronizes today data, including sports and sleep and other data.
- 
- @param finished call back.
- @discussion finished result is Dictionary.
- @discussion dictionary key see ZH_RealTek_HisSportsKey,ZH_RealTek_HisSleepsKey.
- */
--(void)synTodayDataOnFinished:(ZHRealTekSendCommandBlock)finished; //Need to be validated.
-
-
-
-/**
- Synchronizes recent data, including sports and sleep and other data.
- 
- @param finished call back.
- @discussion finished result is Dictionary.
- @discussion dictionary key see ZH_RealTek_HisSportsKey,ZH_RealTek_HisSleepsKey.
- */
--(void)synRecentDataOnFinished:(ZHRealTekSendCommandBlock)finished;//Need to be validated.
 
 
 /**
@@ -457,11 +440,11 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
 
 /**
  Check the firmware for updates.
-
+ @param userID user ID.(optional)
  @param finished call back.
  @discussion finished result is ZH_RealTek_CheckFirmWareUpdate_Code number.
  */
--(void)checkFirmWareHaveNewVersion:(ZHRealTekSendCommandBlock)finished;
+-(void)checkFirmWareHaveNewVersionWithUserId:(NSString *)userID onFinished:(ZHRealTekSendCommandBlock)finished;
 
 
 /**
@@ -482,6 +465,16 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
  */
 -(void)enterOTAModeonFinished:(ZHRealTekSendCommandBlock)finished;
 
+
+/**
+ Upgrade the hand ring firmware with a specific firmware.
+
+ @param firmWareUrl firmware URL
+ @param progress update Progress
+ @param md5 the firmware Data MD5
+ @discussion This is to test specific firmware, please use it carefully.
+ */
+-(void)updateFirmware:(NSString *)firmWareUrl withMD5:(NSString *)md5 onFinished:(ZHRealTekUpdateFirmwareProgressBlock)progress;
 @end
 
 

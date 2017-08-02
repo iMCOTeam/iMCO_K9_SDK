@@ -20,10 +20,13 @@
     if ([SVProgressHUD respondsToSelector:@selector(setMinimumDismissTimeInterval:)]) {
         [SVProgressHUD setMinimumDismissTimeInterval:2.0];
     }
+    
+    
    
     // Override point for customization after application launch.
     return YES;
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

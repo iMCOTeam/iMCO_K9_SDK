@@ -31,8 +31,14 @@ enum ZH_RealTek_Error_Code{
     ZHMacAddressErrorCode = 1004,
     ZHUpdateFirmWareFaild = 1005,
     ZHBindErrorCode = 1006,
+    ZHTimeOutErrorCode = 1007,
 };
 
+// Check OTA FirmWare Code
+enum ZH_RealTek_CheckFirmWareUpdate_Code{
+    ZH_Realtek_FirmWare_HaveNewVersion = 0,
+    ZH_RealTek_FirmWare_isNewVersion = 1,
+};
 
 /**
  Login status

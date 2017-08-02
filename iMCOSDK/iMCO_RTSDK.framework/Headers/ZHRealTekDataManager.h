@@ -30,7 +30,6 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
 @property (nonatomic, copy) ZHRealTekSportDataUpdateBlock heartRateDataUpdateBlock; // Heart rate data updated call back. result is array.
 @property (nonatomic, copy) ZHRealTekBlueToothStateDidUpdatedBlock blueToothStateUpdateBlock; ////The current state of the manager updated block.
 
-
 @property (nonatomic) BOOL isSyningSportData;// Whether the motion data is being synchronized.
 @property (nonatomic) BOOL isBound;//judgment is bound.
 @property(nonatomic, assign) CBManagerState blueToothState; //The current state of the manager.
@@ -43,6 +42,13 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
  */
 +(instancetype)shareRealTekDataManager;
 
+
+/**
+ Get SDK Version
+
+ @return SDK Version
+ */
+-(NSString *)iMCOSDKVersion;
 
 /**
  Scan devices
@@ -450,13 +456,12 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
 
 
 /**
- Enter OTA mode
+ Check the firmware for updates.
 
- @param finished call back
- @discussion finished result is nil.
+ @param finished call back.
+ @discussion finished result is ZH_RealTek_CheckFirmWareUpdate_Code number.
  */
--(void)enterOTAModeonFinished:(ZHRealTekSendCommandBlock)finished;
-
+-(void)checkFirmWareHaveNewVersion:(ZHRealTekSendCommandBlock)finished;
 
 
 /**
@@ -468,7 +473,14 @@ extern NSString *const ZH_RealTek_HisSleepsKey; // Historical sleep Data key.
 -(void)updateFirmwareonFinished:(ZHRealTekUpdateFirmwareProgressBlock)progress;
 
 #pragma mark - Test Command
--(void)sendShakeCommandonFinished:(ZHRealTekSendCommandBlock)finished;
+/**
+ Enter OTA mode
+ 
+ @param finished call back
+ @discussion finished result is nil.
+ @discussion This is an internal flash test OTA upgrade operation, please call carefully.
+ */
+-(void)enterOTAModeonFinished:(ZHRealTekSendCommandBlock)finished;
 
 @end
 

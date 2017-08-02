@@ -27,6 +27,7 @@
     self.tableView.tableFooterView = [UIView new];
     self.devices = [NSMutableArray array];
     
+    
     self.realTekManager = [ZHRealTekDataManager shareRealTekDataManager];
     typeof(self) __weak  weakSelf = self;
     self.realTekManager.disConnectionBlock = ^(ZHRealTekDevice *device, NSError *error){
@@ -59,6 +60,7 @@
     
     
 }
+
 
 
 -(void)viewWillDisappear:(BOOL)animated

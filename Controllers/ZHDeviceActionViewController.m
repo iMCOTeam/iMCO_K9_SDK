@@ -11,7 +11,6 @@
 #import "ZHTitleAndSwitchTableViewCell.h"
 #import "ZHFunctionModel.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import <KVNProgress/KVNProgress.h>
 #import <iMCO_RTSDK/iMCO_RTSDK.h>
 
 #define DeviceActionCellIdentifier @"DeviceActionCellIdentifier"

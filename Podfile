@@ -7,7 +7,6 @@ target 'iMCO_RTSDKDemo' do
 
   # Pods for iMCO_RTSDKDemo
   pod 'SVProgressHUD'
-  pod 'KVNProgress'
   target 'iMCO_RTSDKDemoTests' do
     inherit! :search_paths
     # Pods for testing

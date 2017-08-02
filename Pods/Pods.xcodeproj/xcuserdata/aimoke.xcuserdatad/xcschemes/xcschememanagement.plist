@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>KVNProgress.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-iMCO_RTSDKDemo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>413F50D6C461796F81B267542BE71880</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5AD92E4EBB29C95CE1CFC20208224EAC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>69F8AB96523AA28B2BFF251BD0A44079</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6AD56F5D07D2D4AC272A8F3E13DAF71A</key>
+		<key>99914CAB7415DB748291D171A8FB3F1C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B1409258BFA241FCC1CD73E4F9FC408A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BD1142F4FDFA9AC4EE854A755DB3556E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

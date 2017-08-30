@@ -17,6 +17,7 @@
 		9E1103CA1F0A214D005A084E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103C81F0A214D005A084E /* LaunchScreen.storyboard */; };
 		9E1103D51F0A214D005A084E /* iMCO_RTSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103D41F0A214D005A084E /* iMCO_RTSDKDemoTests.m */; };
 		9E1103E01F0A214D005A084E /* iMCO_RTSDKDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */; };
+		9E49DD531F56AEFB00A2AF29 /* iMCO_RTSDKM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E49DD521F56AEFB00A2AF29 /* iMCO_RTSDKM.framework */; };
 		9E9611461F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9E9611411F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle */; };
 		9E9611471F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */ = {isa = PBXBuildFile; fileRef = 9E9611441F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */; };
 		9E9611511F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E96114A1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m */; };
@@ -31,8 +32,6 @@
 		9E9611631F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E96115E1F31CE0600BDFE81 /* ZHTitleAndSwitchTableViewCell.xib */; };
 		9E9611691F31CE3600BDFE81 /* ZHDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9611661F31CE3600BDFE81 /* ZHDeviceModel.m */; };
 		9E96116A1F31CE3600BDFE81 /* ZHFunctionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9611681F31CE3600BDFE81 /* ZHFunctionModel.m */; };
-		9E9611AB1F31D02D00BDFE81 /* iMCO_RTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */; };
-		9E9611AD1F31D63F00BDFE81 /* iMCO_RTSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +58,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9E9611AD1F31D63F00BDFE81 /* iMCO_RTSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,6 +87,7 @@
 		9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iMCO_RTSDKDemoUITests.m; sourceTree = "<group>"; };
 		9E1103E11F0A214D005A084E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E1104521F0A35B9005A084E /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		9E49DD521F56AEFB00A2AF29 /* iMCO_RTSDKM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMCO_RTSDKM.framework; sourceTree = "<group>"; };
 		9E9611411F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZHRealTekSDKAssets.bundle; sourceTree = "<group>"; };
 		9E9611441F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin"; sourceTree = "<group>"; };
 		9E9611491F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHChooseFirmwareTableViewController.h; sourceTree = "<group>"; };
@@ -111,7 +110,6 @@
 		9E9611661F31CE3600BDFE81 /* ZHDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHDeviceModel.m; sourceTree = "<group>"; };
 		9E9611671F31CE3600BDFE81 /* ZHFunctionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHFunctionModel.h; sourceTree = "<group>"; };
 		9E9611681F31CE3600BDFE81 /* ZHFunctionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHFunctionModel.m; sourceTree = "<group>"; };
-		9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMCO_RTSDK.framework; sourceTree = "<group>"; };
 		B1DC1052B780E5BE6DE1494F /* Pods-iMCO_RTSDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemo/Pods-iMCO_RTSDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		E896C89505642E512058147B /* Pods-iMCO_RTSDKDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMCO_RTSDKDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iMCO_RTSDKDemoUITests/Pods-iMCO_RTSDKDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,7 +120,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F8F4EF473F171ABB03B2928 /* libPods-iMCO_RTSDKDemo.a in Frameworks */,
-				9E9611AB1F31D02D00BDFE81 /* iMCO_RTSDK.framework in Frameworks */,
+				9E49DD531F56AEFB00A2AF29 /* iMCO_RTSDKM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,7 +226,7 @@
 		9E1104091F0A22CF005A084E /* iMCOSDK */ = {
 			isa = PBXGroup;
 			children = (
-				9E9611AA1F31D02D00BDFE81 /* iMCO_RTSDK.framework */,
+				9E49DD521F56AEFB00A2AF29 /* iMCO_RTSDKM.framework */,
 			);
 			path = iMCOSDK;
 			sourceTree = "<group>";

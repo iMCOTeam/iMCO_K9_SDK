@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 typedef NS_ENUM(NSInteger, ZHFunctionCellMode) {
     ZHOnlyTitle,
-    ZHTitleAndSwith,
+    ZHTitleAndSwitch,
     
 };
 
@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, ZHFunctionMode) {
     ZHIncomingReminder,
     ZHGetHistoryData,
     ZHGetRealTimeData,
+    ZHSycLastSportData,
+    ZHSycTodayAllSportData,
     ZHOnceHR,
     ZHContinuousHR,
     ZHGetContinuousHRSetting,
@@ -54,6 +56,8 @@ typedef NS_ENUM(NSInteger, ZHFunctionMode) {
     ZHEnterOTAMode,
     ZHTestUpdateOTA,
     ZHTestMultiCmd,
+    ZHTestUser,
+    ZHTestLog,
 };
 
 @interface ZHFunctionModel : NSObject

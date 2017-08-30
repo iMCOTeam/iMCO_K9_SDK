@@ -24,10 +24,10 @@
     self.refreshControl.tintColor = [UIColor grayColor];
     [self.refreshControl addTarget:self action:@selector(loadNetData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
-   
+    
     [self loadNetData];
-
-   
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -48,45 +48,24 @@
         [self.refreshControl beginRefreshing];
     }
     ZHRealTekDataManager *manager = [ZHRealTekDataManager shareRealTekDataManager];
-    
-    NSString *vendor = @"iMCO";
-    NSString *model = @"k9";
-    NSString *type = @"app";
-     __block NSString *serial = nil;
+    __block NSString *serial = nil;
     [manager getMacAddressonFinished:^(ZHRealTekDevice *device, NSError *error, id result){
         if (error || !result) {
             [self.refreshControl endRefreshing];
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }else{
             serial = result;
-            [manager getOTAApplicationVersiononFinished:^(ZHRealTekDevice *device, NSError *error, id result){
-                if (error || !result) {
-                    [self.refreshControl endRefreshing];
-                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-                }else{
-                    NSInteger otaVersion = [result integerValue];
-                    NSString *fwVersion = [NSString stringWithFormat:@"%ld",(long)otaVersion];
-                    [self loadDataVendor:vendor Model:model fwType:type serial:serial fwVersion:fwVersion];
-                }
-            }];
+            [self loadAllFirmWareData];
         }
     }];
 }
 
 
 
--(void)loadDataVendor:(NSString *)vendor Model:(NSString *)model fwType:(NSString *)type serial:(NSString *)serial fwVersion:(NSString *)fwVersion
+-(void)loadAllFirmWareData
 {
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *serverString = [NSString stringWithFormat:@"%@/v1/checkAll",iMCOServerHost];
-    NSURL *serverUrl = [NSURL URLWithString:serverString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:serverUrl cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:5.0];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json;encoding=utf-8" forHTTPHeaderField:@"Content-Type"];
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:vendor,@"vendor",model,@"model",type,@"fwType",serial,@"serial",fwVersion,@"fwVersion", nil];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingPrettyPrinted error:nil];
-    request.HTTPBody = jsonData;
-     NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
+    [[ZHRealTekDataManager shareRealTekDataManager]checkAllOTADataOnFinished:^(NSError *error, NSData *data){
+        
         [self.tableView.refreshControl endRefreshing];
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -108,20 +87,21 @@
                 [SVProgressHUD showInfoWithStatus:@"固件列表为空"];
             }
         }
+        
     }];
-    [task resume];
+    
 }
 
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     return self.items?1:0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-   return self.items?self.items.count:0;
+    return self.items?self.items.count:0;
 }
 
 
@@ -187,7 +167,7 @@
                 }
             });
         }];
-
+        
     }];
     [alertView addAction:cancelAction];
     [alertView addAction:okAction];
@@ -197,13 +177,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

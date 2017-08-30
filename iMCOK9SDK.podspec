@@ -1,16 +1,16 @@
 
 Pod::Spec.new do |s|
   s.authors      = "iMCO" 
-  s.name         = "iMCO_RTSDK"
-  s.version      = "2.5"
+  s.name         = "iMCOK9SDK"
+  s.version      = "2.6"
   s.summary      = "iMCO K9 SDK for iOS"
   
    s.requires_arc = true
    s.homepage     = "https://github.com/zhuozhuo"
    s.platform     = :ios, "8.0"
-   s.source       = { :git => "ssh://git@gitlab.kelvinji2009.me:10022/Perry/iMCO_RTSDKDemo.git", :tag => s.version }
+   s.source       = { :git => "https://Perry@gitlab.kelvinji2009.me/Perry/iMCO_RTSDKDemo.git", :tag => s.version }
    s.framework  = "CoreBluetooth"
-   s.vendored_frameworks = 'iMCO_RTSDK.framework'
+   s.vendored_frameworks = 'iMCOSDK/iMCOK9SDK.framework'
    s.license      = {
     :type => 'Copyright',
     :text => <<-LICENSE

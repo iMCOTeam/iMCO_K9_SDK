@@ -1,0 +1,6 @@
+framework module iMCOK9SDK {
+  umbrella header "iMCOK9SDK.h"
+
+  export *
+  module * { export * }
+}

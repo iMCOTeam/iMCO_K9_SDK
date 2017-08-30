@@ -10,7 +10,7 @@
 #import "ZHDeviceModel.h"
 #import "ZHDeviceTableViewCell.h"
 #import "ZHDeviceActionViewController.h"
-#import <iMCO_RTSDK/iMCO_RTSDK.h>
+#import <iMCOK9SDK/iMCOK9SDK.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface ZHDeviceListTableViewController (){

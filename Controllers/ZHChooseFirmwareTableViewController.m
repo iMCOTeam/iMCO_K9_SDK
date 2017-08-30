@@ -7,7 +7,7 @@
 //
 
 #import "ZHChooseFirmwareTableViewController.h"
-#import <iMCO_RTSDK/iMCO_RTSDK.h>
+#import <iMCOK9SDK/iMCOK9SDK.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
 @interface ZHChooseFirmwareTableViewController ()

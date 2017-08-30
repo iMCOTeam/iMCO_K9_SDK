@@ -1,6 +1,0 @@
-framework module iMCO_RTSDK {
-  umbrella header "iMCO_RTSDK.h"
-
-  export *
-  module * { export * }
-}

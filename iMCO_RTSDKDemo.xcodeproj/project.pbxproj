@@ -17,7 +17,9 @@
 		9E1103CA1F0A214D005A084E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1103C81F0A214D005A084E /* LaunchScreen.storyboard */; };
 		9E1103D51F0A214D005A084E /* iMCO_RTSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103D41F0A214D005A084E /* iMCO_RTSDKDemoTests.m */; };
 		9E1103E01F0A214D005A084E /* iMCO_RTSDKDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */; };
-		9E49DD571F56C3BA00A2AF29 /* iMCO_RTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E49DD561F56C3BA00A2AF29 /* iMCO_RTSDK.framework */; };
+		9E49DD591F56C78100A2AF29 /* iMCOK9SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E49DD581F56C78100A2AF29 /* iMCOK9SDK.framework */; };
+		9E49DD5A1F56CB1E00A2AF29 /* iMCOK9SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E49DD581F56C78100A2AF29 /* iMCOK9SDK.framework */; };
+		9E49DD5B1F56CB1E00A2AF29 /* iMCOK9SDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9E49DD581F56C78100A2AF29 /* iMCOK9SDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9E9611461F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9E9611411F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle */; };
 		9E9611471F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin in Resources */ = {isa = PBXBuildFile; fileRef = 9E9611441F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */; };
 		9E9611511F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E96114A1F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.m */; };
@@ -58,6 +60,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9E49DD5B1F56CB1E00A2AF29 /* iMCOK9SDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,7 +90,7 @@
 		9E1103DF1F0A214D005A084E /* iMCO_RTSDKDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iMCO_RTSDKDemoUITests.m; sourceTree = "<group>"; };
 		9E1103E11F0A214D005A084E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E1104521F0A35B9005A084E /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		9E49DD561F56C3BA00A2AF29 /* iMCO_RTSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMCO_RTSDK.framework; sourceTree = "<group>"; };
+		9E49DD581F56C78100A2AF29 /* iMCOK9SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMCOK9SDK.framework; sourceTree = "<group>"; };
 		9E9611411F31CDBB00BDFE81 /* ZHRealTekSDKAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZHRealTekSDKAssets.bundle; sourceTree = "<group>"; };
 		9E9611441F31CDBB00BDFE81 /* APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "APP_1.1.0.16146-7a38d5c4ee57b5c010c3ab63fe4cbf13.bin"; sourceTree = "<group>"; };
 		9E9611491F31CDDA00BDFE81 /* ZHChooseFirmwareTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHChooseFirmwareTableViewController.h; sourceTree = "<group>"; };
@@ -119,8 +122,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E49DD5A1F56CB1E00A2AF29 /* iMCOK9SDK.framework in Frameworks */,
 				6F8F4EF473F171ABB03B2928 /* libPods-iMCO_RTSDKDemo.a in Frameworks */,
-				9E49DD571F56C3BA00A2AF29 /* iMCO_RTSDK.framework in Frameworks */,
+				9E49DD591F56C78100A2AF29 /* iMCOK9SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,7 +230,7 @@
 		9E1104091F0A22CF005A084E /* iMCOSDK */ = {
 			isa = PBXGroup;
 			children = (
-				9E49DD561F56C3BA00A2AF29 /* iMCO_RTSDK.framework */,
+				9E49DD581F56C78100A2AF29 /* iMCOK9SDK.framework */,
 			);
 			path = iMCOSDK;
 			sourceTree = "<group>";

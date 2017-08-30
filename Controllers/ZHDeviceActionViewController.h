@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <iMCO_RTSDK/iMCO_RTSDK.h>
+#import <iMCOK9SDK/iMCOK9SDK.h>
 
 
 @interface ZHDeviceActionViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>

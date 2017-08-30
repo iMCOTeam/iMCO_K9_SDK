@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
   s.authors      = "iMCO" 
   s.name         = "iMCOK9SDK"
-  s.version      = "2.6"
+  s.version      = "2.7"
   s.summary      = "iMCO K9 SDK for iOS"
   
    s.requires_arc = true

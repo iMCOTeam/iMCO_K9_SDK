@@ -220,8 +220,8 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_Sleep_Mode) {
 @interface ZHRealTekSleepItem : NSObject
 @property (nonatomic, strong) NSString *startTime; // The start time. （format：yyyy-MM-dd-HH-mm,2015-06-07-08-03)
 @property (nonatomic, strong) NSString *endTime; // The end time. （format：yyyy-MM-dd-HH-mm,2015-06-07-08-04)
-@property (nonatomic, assign) ZH_RealTek_Sleep_Mode mode;
-
+@property (nonatomic, assign) ZH_RealTek_Sleep_Mode mode; // The pre item sleep mode.
+@property (nonatomic, assign) ZH_RealTek_Sleep_Mode lastMode; //The last item sleep mode.
 @end
 
 @interface ZHRealTekHRItem : NSObject

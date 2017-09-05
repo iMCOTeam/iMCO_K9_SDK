@@ -63,13 +63,13 @@
                 NSString *detail = nil;
                 if (sportsArray.count == 1) {
                     _currentSportItem = sportsArray.firstObject;
-                    detail = [NSString stringWithFormat:@"Step:%ld--Calory:%ld--Distance:%ld",_currentSportItem.stepCount,_currentSportItem.calories,_currentSportItem.distance];
+                    detail = [NSString stringWithFormat:@"Step:%ld--Calory:%ld--Distance:%ld",(long)_currentSportItem.stepCount,(long)_currentSportItem.calories,(long)_currentSportItem.distance];
                 }else{
-                    detail = [NSString stringWithFormat:@"Receive Sport Count:%ld",sportsArray.count];
+                    detail = [NSString stringWithFormat:@"Receive Sport Count:%ld",(unsigned long)sportsArray.count];
                 }
-                 [SVProgressHUD showInfoWithStatus:detail];
+                [SVProgressHUD showInfoWithStatus:detail];
             }
-
+            
         });
     };
     
@@ -82,26 +82,7 @@
             }
             
         });
-
-    };
-    
-    [ZHRealTekDataManager shareRealTekDataManager].cameraModeUpdateBlock = ^(ZHRealTekDevice *device, NSError *error){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (!error) {
-               static NSInteger num = 0;
-                num ++;
-                NSString *info = [NSString stringWithFormat:@"Receive Camera mode update numers %ld",(long)num];
-                [SVProgressHUD showInfoWithStatus:info];
-            }
-        });
-    };
-    
-    [ZHRealTekDataManager shareRealTekDataManager].stopMeasuringHRBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *info = [NSString stringWithFormat:@"Receive The device stops measuring the heart rate callbacks"];
-            [SVProgressHUD showInfoWithStatus:info];
-            
-        });
+        
     };
     
     [ZHRealTekDataManager shareRealTekDataManager].heartRateDataUpdateBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
@@ -118,8 +99,37 @@
                 [SVProgressHUD showInfoWithStatus:info];
             }
         });
-
+        
     };
+    
+    [ZHRealTekDataManager shareRealTekDataManager].powerUpdateBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
+        if (!error) {
+            NSNumber *power = result;
+            int32_t powerNum = power.intValue;
+            NSString *info = [NSString stringWithFormat:@"Power have changed:%d",powerNum];
+            [SVProgressHUD showInfoWithStatus:info];
+        }
+    };
+    
+    [ZHRealTekDataManager shareRealTekDataManager].cameraModeUpdateBlock = ^(ZHRealTekDevice *device, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                static NSInteger num = 0;
+                num ++;
+                NSString *info = [NSString stringWithFormat:@"Receive Camera mode update numers %ld",(long)num];
+                [SVProgressHUD showInfoWithStatus:info];
+            }
+        });
+    };
+    
+    [ZHRealTekDataManager shareRealTekDataManager].stopMeasuringHRBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *info = [NSString stringWithFormat:@"Receive The device stops measuring the heart rate callbacks"];
+            [SVProgressHUD showInfoWithStatus:info];
+            
+        });
+    };
+    
 
     // Do any additional setup after loading the view from its nib.
 }

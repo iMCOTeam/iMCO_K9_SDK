@@ -24,15 +24,23 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 @interface ZHRealTekDataManager : NSObject
 
 @property (nonatomic, strong) ZHRealTekDevice *connectedDevice;//Connected device.
+
 @property (nonatomic, copy) ZHRealTekDisConnectionBlock disConnectionBlock;// disconnect block.
+
 @property (nonatomic, copy) ZHRealTekSportDataUpdateBlock sportDataUpdateBlock;// sport data updated call back. (Return value refer to: ZHRealTekSportItem)
+
 @property (nonatomic, copy) ZHRealTekSportDataUpdateBlock sleepDataUpdateBlock;// sleep data updated call back.(Return value refer to: ZH_RealTek_SleepItem)
-@property (nonatomic, copy) ZHRealTekCameraUpdateBlock cameraModeUpdateBlock; // When you enter the photo mode, the receiving device takes a photo status.
 
 @property (nonatomic, copy) ZHRealTekSportDataUpdateBlock heartRateDataUpdateBlock; // Heart rate data updated call back. result is array. (Return value refer to: ZHRealTekHRItem)
+
+@property (nonatomic, copy) ZHRealTekPowerUpdateBlock powerUpdateBlock; // Power change callback.
+
+@property (nonatomic, copy) ZHRealTekCameraUpdateBlock cameraModeUpdateBlock; // When you enter the photo mode, the receiving device takes a photo status.
+
 @property (nonatomic, copy) ZHRealTekSportDataUpdateBlock stopMeasuringHRBlock; //The device stops measuring the heart rate callbacks.
 
 @property (nonatomic, copy) ZHRealTekBlueToothStateDidUpdatedBlock blueToothStateUpdateBlock; ////The current state of the manager updated block.
+
 @property (nonatomic) BOOL isSyningSportData;// Whether the motion data is being synchronized.
 @property (nonatomic) BOOL isBound;//judgment is bound.
 @property (nonatomic) BOOL isScanning;//Whether or not the central is currently scanning.

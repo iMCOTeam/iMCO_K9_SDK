@@ -7,7 +7,7 @@
 ## Usage
 1.  [CocoaPods](https://cocoapods.org/) (*recommended*)
 
-   ``pod 'iMCO_K9_SDK'`
+   `pod 'iMCO_K9_SDK'`
 
 2. Add the `iMCOK9SDK.framework` to the project
 

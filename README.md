@@ -7,11 +7,11 @@
 ## Usage
 1.  [CocoaPods](https://cocoapods.org/) (*recommended*)
 
-   `pod 'iMCO_K9_SDK'`
+   ​     	`pod 'iMCO_K9_SDK'`
 
 2. Add the `iMCOK9SDK.framework` to the project
 
-   Embedding `iMCOK9SDK.framework` In your project. [Reference](https://developer.apple.com/library/content/technotes/tn2435/_index.html#//apple_ref/doc/uid/DTS40017543-CH1-EMBED_SECTION)
+   ​     Embedding `iMCOK9SDK.framework` In your project. [Reference](https://developer.apple.com/library/content/technotes/tn2435/_index.html#//apple_ref/doc/uid/DTS40017543-CH1-EMBED_SECTION)
 
 # Get Started
 

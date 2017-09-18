@@ -23,30 +23,113 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 
 @interface ZHRealTekDataManager : NSObject
 
-@property (nonatomic, strong) ZHRealTekDevice *connectedDevice;//Connected device.
 
-@property (nonatomic, copy) ZHRealTekDisConnectionBlock disConnectionBlock;// disconnect block.
+/**
+ Connected device.
+ */
+@property (nonatomic, strong) ZHRealTekDevice *connectedDevice;
 
-@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock sportDataUpdateBlock;// sport data updated call back. (Return value refer to: ZHRealTekSportItem)
 
-@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock sleepDataUpdateBlock;// sleep data updated call back.(Return value refer to: ZH_RealTek_SleepItem)
+/**
+ Disconnect block.
+ */
+@property (nonatomic, copy) ZHRealTekDisConnectionBlock disConnectionBlock;
 
-@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock heartRateDataUpdateBlock; // Heart rate data updated call back. result is array. (Return value refer to: ZHRealTekHRItem)
+/**
+ The current state of the manager updated block.
+ */
+@property (nonatomic, copy) ZHRealTekBlueToothStateDidUpdatedBlock blueToothStateUpdateBlock;
 
-@property (nonatomic, copy) ZHRealTekPowerUpdateBlock powerUpdateBlock; // Power change callback.
 
-@property (nonatomic, copy) ZHRealTekCameraUpdateBlock cameraModeUpdateBlock; // When you enter the photo mode, the receiving device takes a photo status.
+/**
+ The list of features for the device has been updated.You can review the functionality of the device after the device list is updated.
+ */
+@property (nonatomic, copy) ZHRealTekFunctionsHaveUpdated functionsHaveUpdated;
 
-@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock stopMeasuringHRBlock; //The device stops measuring the heart rate callbacks.
 
-@property (nonatomic, copy) ZHRealTekBlueToothStateDidUpdatedBlock blueToothStateUpdateBlock; ////The current state of the manager updated block.
+/**
+ sport data updated callback. (Return value refer to: ZHRealTekSportItem)
+ */
+@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock sportDataUpdateBlock;
 
-@property (nonatomic) BOOL isSyningSportData;// Whether the motion data is being synchronized.
-@property (nonatomic) BOOL isBound;//judgment is bound.
-@property (nonatomic) BOOL isScanning;//Whether or not the central is currently scanning.
-@property (nonatomic, assign) CBManagerState blueToothState; //The current state of the manager.
-@property (nonatomic, strong) NSString *AppKey;//used when accessing the background when the firmware is upgraded.
-@property (nonatomic, strong) NSString *AppSecret;//used when accessing the background when the firmware is upgraded.
+
+/**
+  sleep data updated callback.(Return value refer to: ZH_RealTek_SleepItem)
+ */
+@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock sleepDataUpdateBlock;
+
+
+/**
+ Heart rate data updated callback.  (result is array,item refer to: ZHRealTekHRItem)
+ */
+@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock heartRateDataUpdateBlock;
+
+
+/**
+ The device stops measuring the heart rate callbacks.
+ @discussion finished result is nil.
+ */
+@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock stopMeasuringHRBlock;
+
+
+
+/**
+ Blood pressure measurement data update callback. (result is array,item refer to:ZHRealTekBPItem)
+ */
+@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock bloodPressureDataUpdateBlock;
+
+
+/**
+ Stop measuring blood pressure callbacks.
+ */
+@property (nonatomic, copy) ZHRealTekSportDataUpdateBlock stopMeasuringBloodPressureBlock;
+
+/**
+ Power change callback.
+ */
+@property (nonatomic, copy) ZHRealTekPowerUpdateBlock powerUpdateBlock;
+
+
+/**
+ When you enter the photo mode, the receiving device takes a photo status.
+ */
+@property (nonatomic, copy) ZHRealTekCameraUpdateBlock cameraModeUpdateBlock;
+
+
+/**
+ Whether the motion data is being synchronized.
+ */
+@property (nonatomic) BOOL isSyningSportData;
+
+
+/**
+ Judgment is bound.
+ */
+@property (nonatomic) BOOL isBound;
+
+
+/**
+ Whether or not the central is currently scanning.
+ */
+@property (nonatomic) BOOL isScanning;
+
+
+/**
+ The current state of the manager.
+ */
+@property (nonatomic, assign) CBManagerState blueToothState;
+
+
+/**
+ Used when accessing the background when the firmware is upgraded.
+ */
+@property (nonatomic, strong) NSString *AppKey;
+
+
+/**
+ Used when accessing the background when the firmware is upgraded.
+ */
+@property (nonatomic, strong) NSString *AppSecret;
 
 /**
  The ZHRealTekDataManager Singleton.
@@ -66,7 +149,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Scan devices
 
- @param update call back
+ @param update callback
  @discussion The advertisement data can be accessed through the keys listed in Advertisement Data Retrieval Keys.
  *  @seealso            CBAdvertisementDataLocalNameKey
  *  @seealso            CBAdvertisementDataManufacturerDataKey
@@ -88,7 +171,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 
  @param device device
  @param options options
- @param finished finish call back
+ @param finished finish callback
  *  @seealso            CBConnectPeripheralOptionNotifyOnConnectionKey
  *  @seealso            CBConnectPeripheralOptionNotifyOnDisconnectionKey
  *  @seealso            CBConnectPeripheralOptionNotifyOnNotificationKey
@@ -100,7 +183,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Cancel connection with device
 
  @param device device
- @param disconnected disconnected call back
+ @param disconnected disconnected callback
  */
 -(void)cancelPeripheralConnection:(ZHRealTekDevice *)device onFinished:(ZHRealTekConnectionBlock) disconnected;
 
@@ -109,7 +192,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Syn time
 
- @param finished finish call back
+ @param finished finish callback
  */
 -(void)synTimeonFinished:(ZHRealTekSendCommandBlock)finished;
 
@@ -119,7 +202,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Bind band device
 
  @param identifier the identifier with user
- @param finished call back
+ @param finished callback
  @discussion finished result is Int Number.
  @discussion identifier length can not more than 32 byte.
  * @seealso ZH_RealTek_Bind_Status
@@ -131,7 +214,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  unbind device
 
- @param finished call back
+ @param finished callback
  @discussion finished result is nil.
  */
 -(void)unBindDeviceonFinished:(ZHRealTekSendCommandBlock)finished;
@@ -140,7 +223,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  login band device
 
  @param identifier the identifier with user
- @param finished finished call back
+ @param finished finished callback
  @discussion  finished result is Int Number.
  * @seealso ZH_RealTek_Login_Status
  */
@@ -150,7 +233,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 
 /**
  Find my band device
- @param finished finished call back
+ @param finished finished callback
  @discussion finished result is nil.
  */
 -(void)findMyBandDeviceonFinished:(ZHRealTekSendCommandBlock)finished;;
@@ -161,7 +244,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  modify device name
 
  @param name the device name
- @param finished call back
+ @param finished callback
  @discussion finished result is nil.
  */
 -(void)modifyDeviceName:(NSString *)name onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -171,7 +254,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  get device name
 
- @param finished finish call back
+ @param finished finish callback
  @discussion finished result is NSString.
  */
 -(void)getDeviceNameonFinished:(ZHRealTekSendCommandBlock)finished;
@@ -180,7 +263,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  syn alarms to device
 
  @param alarms alarms
- @param finished call back
+ @param finished callback
  @discussion alarms members is ZHRealTekAlarm distance. 
  @discussion finished result is nil.
  */
@@ -190,7 +273,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  get alarms from device
 
- @param finished call back
+ @param finished callback
  @discussion finished result is ZHRealTekAlarm distance.
  @discussion finished result is nil.
  */
@@ -202,7 +285,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  set step target
 
  @param step the step
- @param finished call back
+ @param finished callback
  @discussion finished result is nil.
  */
 -(void)setStepTarget:(uint32_t)step onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -215,7 +298,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  @param age user age (0~127)
  @param height user height (unit: cm, 0.0~256)
  @param weight user weight (unit: kg, 0.0~512)
- @param finished call back
+ @param finished callback
  @discussion finished result is nil.
  */
 -(void)setUserProfileWithGender:(ZH_RealTek_Gender)gender withAge:(uint8_t)age withHeight:(float)height withWeight:(float)weight onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -226,7 +309,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  ser loss alert level
 
  @param level alert level
- @param finished finish call back
+ @param finished finish callback
  @discussion finished result is nil.
  */
 -(void)setLossAlertLevel:(ZH_RealTek_AlertLevel)level onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -237,7 +320,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  sit long sit remind
 
  @param sit long sit object
- @param finished call back
+ @param finished callback
  @discussion finished result is nil.
  @see ZHRealTekLongSit
  */
@@ -247,7 +330,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  get long sit Enable
 
- @param finished call back
+ @param finished callback
  @discussion finished result is bool number.
  */
 -(void)getLongSitRemindonFinished:(ZHRealTekSendCommandBlock)finished;
@@ -257,7 +340,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  set moblie os
 
  @param os moblie os
- @param finished call back
+ @param finished callback
  @discussion finished result is nil.
  */
 -(void)setMoblieOS:(ZH_RealTek_OS)os onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -268,7 +351,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Get Battery Level
 
- @param finished call back
+ @param finished callback
  @discussion finished result is int number.
  */
 -(void)getBatteryLevelonFinished:(ZHRealTekSendCommandBlock)finished;
@@ -278,7 +361,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Set Camera mode.
 
  @param enable Enter or quit camera mode.
- @param finished call back
+ @param finished callback
  @discussion finished result is int nil.
  @discussion You must exit the photo mode when you are not using the photo mode.
  */
@@ -289,7 +372,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Enable Turn Wrist Light .
 
  @param enable on/off
- @param finished finish call back.
+ @param finished finish callback.
  @discussion finished result is int nil.
  */
 -(void)setTurnWristLightEnabled:(BOOL)enable onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -310,7 +393,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Enable Call Notification
  
  @param enable on/off
- @param finished call back.
+ @param finished callback.
  @discussion finished result is int nil.
  */
 -(void)setEnableCallNotificationEnabled:(BOOL)enable onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -320,7 +403,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Enable SMS Notification
  
  @param enable on/off
- @param finished call back.
+ @param finished callback.
  @discussion finished result is int nil.
  */
 -(void)setEnableSMSNotificationEnabled:(BOOL)enable onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -330,7 +413,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Enable QQ Notification
  
  @param enable on/off
- @param finished call back.
+ @param finished callback.
  @discussion finished result is int nil.
  */
 -(void)setEnableQQNotificationEnabled:(BOOL)enable onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -340,7 +423,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Enable Wechat Notification
  
  @param enable on/off
- @param finished call back.
+ @param finished callback.
  @discussion finished result is int nil.
  */
 -(void)setEnableWechatNotificationEnabled:(BOOL)enable onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -349,7 +432,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Enable Line Notification
  
  @param enable on/off
- @param finished call back.
+ @param finished callback.
  @discussion Real-time synchronization data must be turned on to receive real-time data for steps and heart rate sleep.
  @discussion finished result is int nil.
  */
@@ -359,7 +442,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Synchronizes historical data, including sports and sleep and other data.
  
- @param finished call back.
+ @param finished callback.
  @discussion finished result is Dictionary.
  @discussion dictionary key see ZH_RealTek_HisSportsKey,ZH_RealTek_HisSleepsKey.
  (Value refer to: ZHRealTekSportItem,ZHRealTekSleepItem)
@@ -374,7 +457,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  @param totalSteps total steps.
  @param totalDistance total distance. (unit: m)
  @param totalCalory total calories. (uint: cal)
- @param finished call back.
+ @param finished callback.
  */
 -(void)synTodayTotalSportDataWithStep:(uint32_t)totalSteps distance:(uint32_t)totalDistance calory:(uint32_t)totalCalory OnFinished:(ZHRealTekSendCommandBlock)finished;
 
@@ -388,7 +471,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  @param calory calories. (uint: cal)
  @param distance distance.  (unit: m)
  @param mode sport mode.
- @param finished call back.
+ @param finished callback.
  */
 -(void)synRecentSportDataWithStep:(uint16_t)steps activeTime:(uint8_t)activeTime calory:(uint32_t)calory distance:(uint16_t)distance offset:(uint16_t)offset mode:(ZH_RealTek_Sport_Mode)mode OnFinished:(ZHRealTekSendCommandBlock)finished;
 
@@ -397,13 +480,24 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  Enable get real-time motion data.
  
  @param enable on or off.
- @param finished call back.
+ @param finished callback.
  @discussion finished result is nil.
  */
 -(void)setRealTimeSynSportData:(BOOL)enable onFinished:(ZHRealTekSendCommandBlock)finished;
 
 
+#pragma mark - Blood Pressure
 
+
+/**
+ Set blood pressure measurements on and off.
+
+ @param enable on/off
+ @param finished callback
+ @discussion finished result is nil.
+ @discussion Blood pressure data return see bloodPressureDataUpdateBlock.
+ */
+-(void)setBloodPressueEnable:(BOOL)enable onFinished:(ZHRealTekSendCommandBlock)finished;
 
 
 #pragma mark Heart Rate Function
@@ -412,7 +506,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  To measure the heart rate.
 
  @param enable on/off
- @param finished call back.
+ @param finished callback.
  @discussion finished result is nil.
  @discussion Heart rate data return see heartRateDataUpdateBlock.
  */
@@ -425,7 +519,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 
  @param enable enable
  @param minutes The time interval.
- @param finished call back.
+ @param finished callback.
  @discussion finished result is nil.
  @discussion Heart rate data return see heartRateDataUpdateBlock.
  */
@@ -436,19 +530,35 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Gets whether to open continuous measurement of heart rate function.
 
- @param finished call back.
+ @param finished callback.
  @discussion finished result is Bool number.
  */
 -(void)getHRReadContinuousSettingOnFinished:(ZHRealTekSendCommandBlock)finished;
 
 
 
+#pragma mark - Orientation
+/**
+ Sets the screen display direction.
+
+ @param orientation Screen Orientation.
+ @param finished callBack.
+ */
+-(void)SetDisplayOrientation:(ZH_RealTek_ScreenOrientation)orientation OnFinished:(ZHRealTekSendCommandBlock)finished;
+
+
+/**
+ Gets the screen display direction.
+
+ @param finished callback.
+ */
+-(void)getDisplayOrientation:(ZHRealTekSendCommandBlock)finished;
 
 #pragma mark - OTA Function
 /**
  Get OTA Application version
 
- @param finished call back.
+ @param finished callback.
  @discussion finished result is int number.
  */
 -(void)getOTAApplicationVersiononFinished:(ZHRealTekSendCommandBlock)finished;
@@ -457,7 +567,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Get OTA Patch version
 
- @param finished call back.
+ @param finished callback.
  @discussion finished result is int number.
  */
 -(void)getOTAPatchVersiononFinished:(ZHRealTekSendCommandBlock)finished;
@@ -466,7 +576,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Get device mac address.
 
- @param finished call back.
+ @param finished callback.
  @discussion finished result is NSString.
  */
 -(void)getMacAddressonFinished:(ZHRealTekSendCommandBlock)finished;
@@ -476,7 +586,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Check the firmware for updates.
  @param userID user ID.(optional)
- @param finished call back.
+ @param finished callback.
  @discussion finished result is ZH_RealTek_CheckFirmWareUpdate_Code number.
  */
 -(void)checkFirmWareHaveNewVersionWithUserId:(NSString *)userID onFinished:(ZHRealTekSendCommandBlock)finished;
@@ -496,7 +606,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Enter OTA mode
  
- @param finished call back
+ @param finished callback
  @discussion finished result is nil.
  @discussion This is an internal flash test OTA upgrade operation, please call carefully.
  */
@@ -507,7 +617,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Obtain all firmware versions for selective test upgrades.
 
- @param finished call back.
+ @param finished callback.
  */
 -(void)checkAllOTADataOnFinished:(void (^)(NSError *error, NSData *data))finished;
 
@@ -526,7 +636,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Check to see if the user is a test group user.
 
- @param finished call back.
+ @param finished callback.
  @discussion If users join test group users will be able to update the beta firmware, please use caution..
  */
 -(void)isTestUserOnFinished:(void (^)(NSError *error, BOOL isTestUser))finished;
@@ -535,7 +645,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Join the test user.
 
- @param finished call back.
+ @param finished callback.
  */
 -(void)enableTesterOnFinished:(void (^)(NSError *error, BOOL success))finished;
 
@@ -544,7 +654,7 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 /**
  Exit the test user.
 
- @param finished call back
+ @param finished callback
  */
 -(void)disableTesterOnFinished:(void (^)(NSError *error, BOOL success))finished;
 

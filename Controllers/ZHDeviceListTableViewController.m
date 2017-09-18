@@ -63,6 +63,36 @@
         }
     };
     
+    self.realTekManager.functionsHaveUpdated = ^(ZHRealTekDevice *device, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                NSString *info = @"The device contains ";
+                if (device.hasStepFunc) {
+                    info = [info stringByAppendingString:@"Step,"];
+                }
+                if (device.hasHRMFunc) {
+                    info = [info stringByAppendingString:@"Heart,"];
+                }
+                if (device.hasSleepFunc) {
+                    info = [info stringByAppendingString:@"Sleep,"];
+                }
+                if (device.hasBloodPressureFunc) {
+                    info = [info stringByAppendingString:@"Blood pressure,"];
+                }
+                if (device.hasOrientationSwitchFunc) {
+                    info = [info stringByAppendingString:@"Orientation Switch,"];
+                }
+                info = [info stringByAppendingString:@"functions"];
+                [SVProgressHUD showInfoWithStatus:info];
+            }
+            
+        });
+        
+    };
+
+    
     
 }
 

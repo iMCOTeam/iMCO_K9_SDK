@@ -9,8 +9,9 @@
 #import "ZHRealTekModels.h"
 
 typedef void (^ZHRealTekDeviceUpdateBlock)(ZHRealTekDevice *device, NSDictionary *advertisementData);
-typedef void (^ZHRealTekConnectionBlock)(ZHRealTekDevice *device, NSError*error);
-typedef void (^ZHRealTekDisConnectionBlock)(ZHRealTekDevice *device, NSError*error);
+typedef void (^ZHRealTekConnectionBlock)(ZHRealTekDevice *device, NSError *error);
+typedef void (^ZHRealTekDisConnectionBlock)(ZHRealTekDevice *device, NSError *error);
+typedef void (^ZHRealTekFunctionsHaveUpdated)(ZHRealTekDevice *device, NSError *error);
 typedef void (^ZHRealTekSendCommandBlock)(ZHRealTekDevice *device, NSError*error,id result);
 typedef void (^ZHRealTekSportDataUpdateBlock)(ZHRealTekDevice *device, NSError*error,id result);
 typedef void (^ZHRealTekPowerUpdateBlock)(ZHRealTekDevice *device, NSError *error, id result);

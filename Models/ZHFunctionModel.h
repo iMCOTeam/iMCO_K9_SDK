@@ -58,6 +58,11 @@ typedef NS_ENUM(NSInteger, ZHFunctionMode) {
     ZHTestMultiCmd,
     ZHTestUser,
     ZHTestLog,
+    ZHTestMultiReminder,
+    ZHTestContinuousReminder,
+    ZHSetScreenOrientation,
+    ZHGetScreenOrientation,
+    ZHBloodPressure,
 };
 
 @interface ZHFunctionModel : NSObject

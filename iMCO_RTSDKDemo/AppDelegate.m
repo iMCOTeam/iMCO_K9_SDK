@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-
+#import <iMCOK9SDK/iMCOK9SDK.h>
 @interface AppDelegate ()
 
 @end
@@ -20,7 +20,8 @@
     if ([SVProgressHUD respondsToSelector:@selector(setMinimumDismissTimeInterval:)]) {
         [SVProgressHUD setMinimumDismissTimeInterval:2.0];
     }
-    
+    [ZHRealTekDataManager shareRealTekDataManager].AppKey = @"keyOPCjEL08cCCIgm33y8cmForWXLSR9uLT";
+    [ZHRealTekDataManager shareRealTekDataManager].AppSecret = @"secaab78b9d7dbe11e7a420ee796be10e85-i6ff579j49afj5";
     
    
     // Override point for customization after application launch.

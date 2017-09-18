@@ -154,12 +154,88 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_Sleep_Mode) {
 };
 
 
+typedef NS_ENUM(NSInteger, ZH_RealTek_ScreenOrientation) {
+    ZH_Orientation_Landscape = 0,
+    ZH_Orientation_Portrait = 1,
+};
 
 @interface ZHRealTekDevice : NSObject
-@property (nonatomic, strong) NSString *name; //Device Name
-@property (nonatomic, strong) NSString *identifier; //Device Unique identification
-@property (nonatomic, assign) NSInteger rssi; //RSSI
 
+/**
+ Device Name
+ */
+@property (nonatomic, strong) NSString *name;
+
+/**
+ Device Unique identification
+ */
+@property (nonatomic, strong) NSString *identifier;
+
+/**
+ RSSI
+ */
+@property (nonatomic, assign) NSInteger rssi;
+
+
+/**
+ Whether the device is connected.
+ */
+@property (nonatomic, assign) BOOL connected;
+
+
+/**
+ Whether the device is already bound.
+ */
+@property (nonatomic, assign) BOOL bound;
+
+
+/**
+ Whether to get the functionality contained by the device.
+ @discussion You can listen for changes to the value to determine if the device function module is obtained.
+ */
+@property (nonatomic, assign) BOOL hasGetFuncVlaue;
+
+/**
+ Whether the device has heart rate function.
+ @discussion Valid after device is connected.
+ */
+@property (nonatomic, assign) BOOL hasHRMFunc;
+
+
+/**
+ Whether the device has a stepping function.
+ @discussion Valid after device is connected.
+ */
+@property (nonatomic, assign) BOOL hasStepFunc;
+
+
+/**
+ Whether the device has sleep monitoring function.
+ @discussion Valid after device is connected.
+ */
+@property (nonatomic, assign) BOOL hasSleepFunc;
+
+
+/**
+ Whether the equipment has blood pressure monitoring function.
+ @discussion Valid after device is connected.
+ */
+@property (nonatomic, assign) BOOL hasBloodPressureFunc;
+
+
+/**
+ Whether the device has screen switching function.
+ @discussion Valid after device is connected.
+ */
+@property (nonatomic, assign) BOOL hasOrientationSwitchFunc;
+
+
+
+/**
+ Device MAC address.
+ @discussion Valid after device is connected.
+ */
+@property (nonatomic, strong) NSString *macAddress;
 @end
 
 
@@ -210,6 +286,10 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_Sleep_Mode) {
 
 @end
 
+
+/**
+ The most primitive sleep data. Value returned in sleepDataUpdateBlock.
+ */
 @interface ZH_RealTek_SleepItem : NSObject
 @property (nonatomic, strong) NSString *startTime; //yyyy-MM-dd-HH-mm 
 @property (nonatomic) long long startTimeStamp;
@@ -217,12 +297,17 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_Sleep_Mode) {
 @end
 
 
+
+/**
+ Processed sleep data. The block returned in the Synhisdataonfinished method.
+ */
 @interface ZHRealTekSleepItem : NSObject
 @property (nonatomic, strong) NSString *startTime; // The start time. （format：yyyy-MM-dd-HH-mm,2015-06-07-08-03)
 @property (nonatomic, strong) NSString *endTime; // The end time. （format：yyyy-MM-dd-HH-mm,2015-06-07-08-04)
 @property (nonatomic, assign) ZH_RealTek_Sleep_Mode mode; // The pre item sleep mode.
 @property (nonatomic, assign) ZH_RealTek_Sleep_Mode lastMode; //The last item sleep mode.
 @end
+
 
 @interface ZHRealTekHRItem : NSObject
 @property (nonatomic, strong) NSString *time; // The time. （format：yyyy-MM-dd-HH-mm-ss,2015-06-07-08-03-09)
@@ -231,8 +316,24 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_Sleep_Mode) {
 @end
 
 
+@interface ZHRealTekBPItem : NSObject
+@property (nonatomic, strong) NSString *time; // The time. (format: yyyy-MM-dd-HH-mm-ss,2015-06-07-08-03-08)
+@property (nonatomic, assign) NSInteger highPressure;
+@property (nonatomic, assign) NSInteger lowPressure;
+@property (nonatomic, assign) NSInteger heartRate;
+
+@end
+
+
+/**
+ The total movement data returned after synchronizing the data for verification with locally stored data.
+ */
 @interface ZHRealTekSportCalibrationItem : NSObject
 
+
+/**
+ The current offset of the firmware.
+ */
 @property (nonatomic, assign) NSInteger offset;
 @property (nonatomic, assign) NSInteger totalSteps;
 @property (nonatomic, assign) NSInteger totalCalory;

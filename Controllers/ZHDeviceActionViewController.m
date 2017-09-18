@@ -8,10 +8,10 @@
 
 #import "ZHDeviceActionViewController.h"
 #import "ZHCommandTableViewCell.h"
-#import <iMCOK9SDK/iMCOK9SDK.h>
 #import "ZHTitleAndSwitchTableViewCell.h"
 #import "ZHFunctionModel.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <iMCOK9SDK/iMCOK9SDK.h>
 
 #define DeviceActionCellIdentifier @"DeviceActionCellIdentifier"
 #define DeviceSwitchCellIdentifier @"DeviceSwitchCellIdentifier"
@@ -43,7 +43,6 @@
     [self initialData];
     //Commands
     self.commands =@[@"绑定命令",@"设置命令",@"运动数据命令",@"辅助命令",@"固件升级命令", @"测试命令"];
-    
     //keys
     self.commandkeys = [NSMutableArray array];
     [self.commandkeys addObject:[self getBindCommandKeys]];
@@ -54,7 +53,7 @@
     [self.commandkeys addObject:[self getTestCommandKeys]];
     
     
-
+    
     [ZHRealTekDataManager shareRealTekDataManager].sportDataUpdateBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (result && !error) {
@@ -76,8 +75,8 @@
     [ZHRealTekDataManager shareRealTekDataManager].sleepDataUpdateBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (result && !error) {
-                ZH_RealTek_SleepItem *sleepItem = result;
-                NSString *detail = [NSString stringWithFormat:@"Sleep startTime:%@-Mode:%ld",sleepItem.startTime,(long)sleepItem.mode];
+                NSArray *sleepItems = result;
+                NSString *detail = [NSString stringWithFormat:@"Sleep Items Counts:%ld",(long)sleepItems.count];
                 [SVProgressHUD showInfoWithStatus:detail];
             }
             
@@ -90,7 +89,7 @@
             if (!error && result) {
                 NSArray *array = result;
                 NSInteger num = array.count;
-                NSString *info = [NSString stringWithFormat:@"Receive heart rate numers %ld",(long)num];
+                NSString *info = [NSString stringWithFormat:@"Receive heart rate numbers %ld",(long)num];
                 if (array.count == 1) {
                     ZHRealTekHRItem *item = array.firstObject;
                     NSString *time = item.time;
@@ -101,6 +100,15 @@
         });
         
     };
+    
+    [ZHRealTekDataManager shareRealTekDataManager].stopMeasuringHRBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *info = [NSString stringWithFormat:@"Receive The device stops measuring the heart rate callbacks"];
+            [SVProgressHUD showInfoWithStatus:info];
+            
+        });
+    };
+    
     
     [ZHRealTekDataManager shareRealTekDataManager].powerUpdateBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
         if (!error) {
@@ -122,15 +130,37 @@
         });
     };
     
-    [ZHRealTekDataManager shareRealTekDataManager].stopMeasuringHRBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
+    
+    
+    
+    [ZHRealTekDataManager shareRealTekDataManager].bloodPressureDataUpdateBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *info = [NSString stringWithFormat:@"Receive The device stops measuring the heart rate callbacks"];
+            if (!error && result) {
+                NSArray *array = result;
+                NSInteger num = array.count;
+                NSString *info = [NSString stringWithFormat:@"Receive Blood Pressure numbers %ld",(long)num];
+                if (array.count == 1) {
+                    ZHRealTekBPItem *item = array.firstObject;
+                    NSString *time = item.time;
+                    info = [NSString stringWithFormat:@"Receive Blood Pressure Data time:%@--HR: %ld--LowBP:%ld--HighBP:%ld",time,(long)item.heartRate,(long)item.lowPressure,(long)item.highPressure];
+                }
+                [SVProgressHUD showInfoWithStatus:info];
+            }
+        });
+        
+    };
+    
+    
+    
+    [ZHRealTekDataManager shareRealTekDataManager].stopMeasuringBloodPressureBlock = ^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *info = [NSString stringWithFormat:@"Receive The device stops measuring Blood Pressure callbacks"];
             [SVProgressHUD showInfoWithStatus:info];
             
         });
     };
     
-
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -139,15 +169,15 @@
 {
     [super viewWillDisappear:animated];
     /*ZHRealTekDataManager *manager = [ZHRealTekDataManager shareRealTekDataManager];
-    if (manager.connectedDevice) {
-        [manager cancelPeripheralConnection:manager.connectedDevice onFinished:^(ZHRealTekDevice *device, NSError *error){
-            if (error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-                });
-            }
-        }];
-    }*/
+     if (manager.connectedDevice) {
+     [manager cancelPeripheralConnection:manager.connectedDevice onFinished:^(ZHRealTekDevice *device, NSError *error){
+     if (error) {
+     dispatch_async(dispatch_get_main_queue(), ^{
+     [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+     });
+     }
+     }];
+     }*/
 }
 
 
@@ -194,7 +224,11 @@
     ZHFunctionModel *smsReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"短信提醒", @"SMS Reminder") cellMode:ZHTitleAndSwitch functionMode:ZHSMSReminder];
     ZHFunctionModel *lineReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"Line提醒", @"Line Reminder") cellMode:ZHTitleAndSwitch functionMode:ZHLineReminder];
     ZHFunctionModel *incomingReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"来电提醒", @"inComing Reminder") cellMode:ZHTitleAndSwitch functionMode:ZHIncomingReminder];
-    return @[synTime,setAlarm,getAlarms,setStepTarget,setUserProfile,sittingRemider,getSittingRemider,synPhoneSystem,enterPhotoMode,exitPhotoMode,RHLightScreen,getRHLightScreenSetting,qqReminder,wechatReminder,smsReminder,lineReminder,incomingReminder];
+    ZHFunctionModel *setScreenDirection = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"横竖屏设置", @"Screen setup") cellMode:ZHTitleAndSwitch functionMode:ZHSetScreenOrientation];
+    ZHFunctionModel *getScreenDirection = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取横竖屏设置", @"Get screen Setup") cellMode:ZHOnlyTitle functionMode:ZHGetScreenOrientation];
+    return @[synTime,setAlarm,getAlarms,setStepTarget,setUserProfile,sittingRemider,getSittingRemider,synPhoneSystem,enterPhotoMode,exitPhotoMode,RHLightScreen,getRHLightScreenSetting,qqReminder,wechatReminder,smsReminder,lineReminder,incomingReminder,setScreenDirection,getScreenDirection];
+    
+    
 }
 
 
@@ -208,7 +242,8 @@
     ZHFunctionModel *getContinuousHRSitting = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取连续心率设置是否开启", @"Get Continuous Heart Rate Setting") cellMode:ZHOnlyTitle functionMode:ZHGetContinuousHRSetting];
     ZHFunctionModel *synlastSportData = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"同步最近15分钟的运动数据", @"Synchronize recent 15-minute movement data") cellMode:ZHOnlyTitle functionMode:ZHSycLastSportData];
     ZHFunctionModel *synTodaySportData = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"同步今天所有运动数据", @"Synchronize all movement data today") cellMode:ZHOnlyTitle functionMode:ZHSycTodayAllSportData];
-    return @[hisData,realTimeData,getOnceHeartRate,getContinuousHR,getContinuousHRSitting,synlastSportData,synTodaySportData];
+    ZHFunctionModel *bloodPressure = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"血压测量", @"Measuring blood pressure") cellMode:ZHTitleAndSwitch functionMode:ZHBloodPressure];
+    return @[hisData,realTimeData,getOnceHeartRate,getContinuousHR,getContinuousHRSitting,synlastSportData,synTodaySportData,bloodPressure];
     
 }
 
@@ -239,8 +274,10 @@
     ZHFunctionModel *testUpdateOTA = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"选择固件进行升级", @"Choose OTA Update") cellMode:ZHOnlyTitle functionMode:ZHTestUpdateOTA];
     ZHFunctionModel *multiBleCommands = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"同时发送多个命令", @"同时发送多个命令") cellMode:ZHOnlyTitle functionMode:ZHTestMultiCmd];
     ZHFunctionModel *testUserModel = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"测试用户", @"测试用户") cellMode:ZHOnlyTitle functionMode:ZHTestUser];
-     ZHFunctionModel *testLog = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"Log文件", @"Log文件") cellMode:ZHOnlyTitle functionMode:ZHTestLog];
-    return @[testUpdateOTA,multiBleCommands,testUserModel,testLog];
+    ZHFunctionModel *testLog = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"Log文件", @"Log文件") cellMode:ZHOnlyTitle functionMode:ZHTestLog];
+    ZHFunctionModel *testMultiReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"连续发送所有通知开关", @"Send all reminder status") cellMode:ZHTitleAndSwitch functionMode: ZHTestMultiReminder];
+    ZHFunctionModel *testCMultiReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"依次发送所有通知开关", @"Send all reminder status") cellMode:ZHTitleAndSwitch functionMode: ZHTestMultiReminder];
+    return @[testUpdateOTA,multiBleCommands,testUserModel,testLog,testMultiReminder,testCMultiReminder];
 }
 
 
@@ -257,7 +294,7 @@
     if (self.commandkeys.count > section) {
         NSArray *keys = [self.commandkeys objectAtIndex:section];
         return keys.count;
-
+        
     }else
         return 0;
 }
@@ -298,8 +335,8 @@
         switchCell.titleLabel.text = functionModel.title;
         return switchCell;
     }
-   
-   
+    
+    
 }
 
 
@@ -371,7 +408,7 @@
             [self unBind];
         }
             break;
-        
+            
         case ZHCancelConnect:{// Cancel connect
             [self cancelConnect];
         }
@@ -415,7 +452,7 @@
             [self setLossLevel];
         }
             break;
-        
+            
         case ZHGetSittingReminder:{// Get Long Sit Remind Data
             [self getLongSitRemind];
         }
@@ -432,13 +469,17 @@
             [self quitCameraMode];
         }
             break;
-       
+            
         case ZHGetRaiseHandLightSet:{ // Get Turn Wrist Light
             [self getTurnWristLight];
         }
             break;
         case ZHSetSittingReminder:{
             [self setLongSit:[self.showTableView cellForRowAtIndexPath:indexPath]];
+        }
+            break;
+        case ZHGetScreenOrientation:{
+            [self getScreenOrientation];
         }
             break;
         default:
@@ -453,7 +494,7 @@
 {
     NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
     ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
-
+    
     switch (functionModel.functionMode) {
         case ZHGetHistoryData:{ // get his data
             [self getHisData];
@@ -463,7 +504,7 @@
             [self getOneceHeartRate];
         }
             break;
-        
+            
         case ZHGetContinuousHRSetting:{ // Gets whether to open continuous measurement of heart rate function.
             [self getContinuousHeartRateSetting];
         }
@@ -535,7 +576,7 @@
 {
     NSArray *keys = [self.commandkeys objectAtIndex:indexPath.section];
     ZHFunctionModel *functionModel = [keys objectAtIndex:indexPath.row];
-
+    
     switch (functionModel.functionMode) {
         case ZHCheckOTAVersion:{ // Check to see if the firmware needs to be updated.
             [self checkFirmWareUpdate];
@@ -545,7 +586,7 @@
             [self beginUpdateFirmWare];
         }
             break;
-        
+            
             
             
         default:
@@ -602,7 +643,7 @@
                 switch (status) {
                     case RealTek_Login_Success:
                     {
-                
+                        
                         [SVProgressHUD showSuccessWithStatus:@"Login success indicates that it is already bound"];
                     }
                         break;
@@ -618,7 +659,7 @@
         });
         
     }];
-
+    
 }
 
 
@@ -652,7 +693,7 @@
         });
         
     }];
-
+    
 }
 
 
@@ -660,14 +701,27 @@
 {
     [SVProgressHUD show];
     [[ZHRealTekDataManager shareRealTekDataManager]unBindDeviceonFinished:^(ZHRealTekDevice *device, NSError *error, id result){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error) {
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-                [self.navigationController popViewControllerAnimated:YES];
-            }else{
-                [SVProgressHUD showSuccessWithStatus:@"Unbind success"];
-            }
-        });
+            });
+            
+        }else{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showSuccessWithStatus:nil];
+            });
+            
+            [[ZHRealTekDataManager shareRealTekDataManager]cancelPeripheralConnection:device onFinished:^(ZHRealTekDevice *tDevice, NSError *tError){
+                if (error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    });
+                    
+                }
+            }];
+            
+        }
     }];
     
 }
@@ -692,7 +746,7 @@
             });
         }
     }];
-
+    
 }
 
 #pragma mark - Assist Function
@@ -706,7 +760,7 @@
             }else{
                 [SVProgressHUD showSuccessWithStatus:@"Send find device Command Success"];
             }
-          
+            
         });
     }];
 }
@@ -716,8 +770,8 @@
     
     UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Band Name", @"Band Name") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField){
-       textField.placeholder = @"Name";
-       
+        textField.placeholder = @"Name";
+        
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
         
@@ -736,7 +790,7 @@
                     }
                 });
             }];
- 
+            
         }
         
     }];
@@ -796,7 +850,7 @@
         });
         
     }];
-
+    
 }
 
 #pragma mark - Set function
@@ -814,7 +868,7 @@
         });
         
     }];
-
+    
 }
 
 
@@ -837,7 +891,7 @@
         });
         
     }];
-
+    
 }
 
 
@@ -945,7 +999,7 @@
                 });
                 
             }];
-
+            
             
         }
         
@@ -953,6 +1007,36 @@
     [alertView addAction:cancelAction];
     [alertView addAction:okAction];
     [self presentViewController:alertView animated:YES completion:nil];
+}
+
+-(void)getScreenOrientation
+{
+    BOOL haveScreenFunction = [ZHRealTekDataManager shareRealTekDataManager].connectedDevice.hasOrientationSwitchFunc;
+    if (!haveScreenFunction) {
+        [self showHaveNotFunctionReminder];
+        return;
+    }
+    [SVProgressHUD show];
+    [[ZHRealTekDataManager shareRealTekDataManager]getDisplayOrientation:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                NSNumber *number = result;
+                int8_t orientation = number.intValue;
+                NSString *info = [NSString stringWithFormat:@"Screen Orientation is "];
+                if (orientation == ZH_Orientation_Landscape) {
+                    info = [info stringByAppendingString:@"Landscape"];
+                }else if (orientation == ZH_Orientation_Portrait){
+                    info = [info stringByAppendingString:@"Portrait"];
+                }else{
+                    info = [info stringByAppendingString:@"Unknown"];
+                }
+                [SVProgressHUD showInfoWithStatus:info];
+            }
+        });
+        
+    }];
 }
 
 
@@ -973,7 +1057,7 @@
         });
         
     }];
-
+    
 }
 
 -(void)getLongSitRemind
@@ -997,7 +1081,7 @@
                 
             }
         });
-
+        
     }];
 }
 
@@ -1013,7 +1097,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"Set OS Success"];
             }
         });
-
+        
     }];
     
 }
@@ -1044,7 +1128,7 @@
             }
         });
     }];
-
+    
 }
 
 
@@ -1060,7 +1144,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"Set Turn Wrist Light Success"];
             }
         });
-
+        
     }];
 }
 
@@ -1092,7 +1176,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"Set QQ Notification Success"];
             }
         });
-
+        
     }];
 }
 
@@ -1110,7 +1194,7 @@
         });
         
     }];
-
+    
 }
 
 -(void)setSMSNotification:(BOOL)onEable
@@ -1127,7 +1211,7 @@
         });
         
     }];
-
+    
 }
 
 -(void)setLineNotification:(BOOL)onEable
@@ -1144,7 +1228,7 @@
         });
         
     }];
-
+    
 }
 
 
@@ -1167,36 +1251,36 @@
 {
     [SVProgressHUD show];
     [[ZHRealTekDataManager shareRealTekDataManager]synHisDataOnFinished:^(ZHRealTekDevice *device, NSError *error, id result)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error) {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            }else{
-                if (result) {
-                    NSDictionary *dic = result;
-                    NSArray *sports = [dic objectForKey:ZH_RealTek_HisSportsKey];
-                    NSArray *sleeps = [dic objectForKey:ZH_RealTek_HisSleepsKey];
-                    NSString *temInfo = nil;
-                    if ([dic.allKeys containsObject:ZH_RealTek_CalibrationKey])
-                    {
-                        ZHRealTekSportCalibrationItem *item = [result objectForKey:ZH_RealTek_CalibrationKey];
-                        temInfo = [NSString stringWithFormat:@"Calibration totalSteps:%ld--totalCalory:%ld--totalDistance:%ld",(long)item.totalSteps,(long)item.totalCalory,(long)item.totalDistance];
-                        
-                    }
-                    
-                    NSString *info = [NSString stringWithFormat:@"Get His Data Success,sports count:%ld,sleeps count:%ld",(long)sports.count,(long)sleeps.count];
-                    if (temInfo) {
-                        info = [info stringByAppendingString:temInfo];
-                    }
-                    [SVProgressHUD showSuccessWithStatus:info];
-                }else{
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             if (error) {
+                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+             }else{
+                 if (result) {
+                     NSDictionary *dic = result;
+                     NSArray *sports = [dic objectForKey:ZH_RealTek_HisSportsKey];
+                     NSArray *sleeps = [dic objectForKey:ZH_RealTek_HisSleepsKey];
+                     NSString *temInfo = nil;
+                     if ([dic.allKeys containsObject:ZH_RealTek_CalibrationKey])
+                     {
+                         ZHRealTekSportCalibrationItem *item = [result objectForKey:ZH_RealTek_CalibrationKey];
+                         temInfo = [NSString stringWithFormat:@"Calibration totalSteps:%ld--totalCalory:%ld--totalDistance:%ld",(long)item.totalSteps,(long)item.totalCalory,(long)item.totalDistance];
+                         
+                     }
+                     
+                     NSString *info = [NSString stringWithFormat:@"Get His Data Success,sports count:%ld,sleeps count:%ld",(long)sports.count,(long)sleeps.count];
+                     if (temInfo) {
+                         info = [info stringByAppendingString:temInfo];
+                     }
+                     [SVProgressHUD showSuccessWithStatus:info];
+                 }else{
                      [SVProgressHUD showSuccessWithStatus:@"Get His Data failed"];
-                }
-                
-            }
-        });
-
-    }];
+                 }
+                 
+             }
+         });
+         
+     }];
 }
 
 
@@ -1223,7 +1307,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"Syc Last sport data Success"];
             }
         });
-
+        
     }];
 }
 
@@ -1239,7 +1323,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"Syc today total sport data Success"];
             }
         });
-
+        
     }];
 }
 
@@ -1255,7 +1339,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"Set realtime step data Success"];
             }
         });
-
+        
     }];
 }
 
@@ -1276,7 +1360,7 @@
                 });
                 
             }];
-
+            
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD showErrorWithStatus:er.localizedDescription];
@@ -1291,28 +1375,156 @@
     [SVProgressHUD show];
     BOOL enable = onEable;
     uint8_t minute = 1;
-     [[ZHRealTekDataManager shareRealTekDataManager]setRealTimeSynSportData:YES onFinished:^(ZHRealTekDevice *de, NSError *er , id res){
-         if (!er) {
-             [[ZHRealTekDataManager shareRealTekDataManager]setHRReadContinuous:enable Interval:minute onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     if (error) {
-                         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-                     }else{
-                         [SVProgressHUD showSuccessWithStatus:@"Enable Read Continuous hear rate success"];
-                     }
-                 });
-                 
-             }];
-
-         }else{
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [SVProgressHUD showErrorWithStatus:er.localizedDescription];
-             });
-         }
-     }];
+    [[ZHRealTekDataManager shareRealTekDataManager]setRealTimeSynSportData:YES onFinished:^(ZHRealTekDevice *de, NSError *er , id res){
+        if (!er) {
+            [[ZHRealTekDataManager shareRealTekDataManager]setHRReadContinuous:enable Interval:minute onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error) {
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    }else{
+                        [SVProgressHUD showSuccessWithStatus:@"Enable Read Continuous hear rate success"];
+                    }
+                });
+                
+            }];
+            
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD showErrorWithStatus:er.localizedDescription];
+            });
+        }
+    }];
     
 }
 
+
+-(void)setScreenOrientation:(BOOL)enable
+{
+    BOOL haveScreenFunction = [ZHRealTekDataManager shareRealTekDataManager].connectedDevice.hasOrientationSwitchFunc;
+    if (!haveScreenFunction) {
+        [self showHaveNotFunctionReminder];
+        return;
+    }
+    ZH_RealTek_ScreenOrientation orientation = ZH_Orientation_Landscape;
+    if (!enable) {
+        orientation = ZH_Orientation_Portrait;
+    }
+    [SVProgressHUD show];
+    [[ZHRealTekDataManager shareRealTekDataManager]SetDisplayOrientation:orientation OnFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:nil];
+            }
+        });
+    }];
+}
+
+
+-(void)setMultiReminder:(BOOL)enable
+{
+    
+    [[ZHRealTekDataManager shareRealTekDataManager]setEnableQQNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"Enable QQ Notification Success"];
+            }
+        });
+    }];
+    
+    [[ZHRealTekDataManager shareRealTekDataManager]setEnableWechatNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"Enable Wechat Notification Success"];
+            }
+        });
+    }];
+    
+    [[ZHRealTekDataManager shareRealTekDataManager]setEnableSMSNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"Enable SMS Notification Success"];
+            }
+        });
+    }];
+    
+    [[ZHRealTekDataManager shareRealTekDataManager]setEnableCallNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"Enable InCall Notification Success"];
+            }
+        });
+    }];
+}
+
+-(void)sendCMultiReminder:(BOOL)enable
+{
+    [[ZHRealTekDataManager shareRealTekDataManager]setEnableQQNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:@"Enable QQ Notification Success"];
+            }
+        });
+        
+        [[ZHRealTekDataManager shareRealTekDataManager]setEnableWechatNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (error) {
+                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                }else{
+                    [SVProgressHUD showSuccessWithStatus:@"Enable Wechat Notification Success"];
+                }
+            });
+            [[ZHRealTekDataManager shareRealTekDataManager]setEnableSMSNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error) {
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    }else{
+                        [SVProgressHUD showSuccessWithStatus:@"Enable SMS Notification Success"];
+                    }
+                });
+                [[ZHRealTekDataManager shareRealTekDataManager]setEnableCallNotificationEnabled:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (error) {
+                            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                        }else{
+                            [SVProgressHUD showSuccessWithStatus:@"Enable All Notification Success"];
+                        }
+                    });
+                }];
+            }];
+        }];
+    }];
+}
+
+
+-(void)setBloodPressueEnable:(BOOL)enable
+{
+    if (![ZHRealTekDataManager shareRealTekDataManager].connectedDevice.hasBloodPressureFunc) {
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"无血压功能!", @"No blood pressure!")];
+        return;
+    }
+    [SVProgressHUD show];
+    [[ZHRealTekDataManager shareRealTekDataManager]setBloodPressueEnable:enable onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }else{
+                [SVProgressHUD showSuccessWithStatus:nil];
+            }
+        });
+    }];
+}
 
 -(void)getContinuousHeartRateSetting
 {
@@ -1330,7 +1542,7 @@
                 [SVProgressHUD showSuccessWithStatus:info];
             }
         });
-
+        
     }];
 }
 
@@ -1379,7 +1591,7 @@
             }
         });
     }];
-
+    
 }
 
 -(void)getFirmWareMacAdress
@@ -1470,7 +1682,7 @@
     NSInteger day = [dateComponent day];
     NSInteger hour = [dateComponent hour];
     NSInteger minute = [dateComponent minute];
-
+    
     
     ZHRealTekAlarm *alarm1 = [[ZHRealTekAlarm alloc]init];
     alarm1.year =  year;
@@ -1489,7 +1701,7 @@
     alarm2.minute = minute + 4;
     alarm2.index = 1;
     alarm2.dayFlags = 0;
-
+    
     ZHRealTekAlarm *alarm3 = [[ZHRealTekAlarm alloc]init];
     alarm3.year =  year;
     alarm3.month = month;
@@ -1499,7 +1711,13 @@
     alarm3.index = 2;
     alarm3.dayFlags = 0;
     
-   return @[alarm1,alarm2,alarm3];
+    return @[alarm1,alarm2,alarm3];
+}
+
+#pragma mark - Private method
+-(void)showHaveNotFunctionReminder
+{
+    [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"手环固件不支持该功能,请升级固件或者询问开发商", @"Hand ring firmware does not support this feature, please upgrade firmware or ask the developer")];
 }
 
 
@@ -1526,15 +1744,15 @@
 
 -(void)sendMultipleCommands
 {
-     [self synTime];
-     [self setAlarms];
-     [self getAlarms];
-     //[self setStepTarget];
-     [self setUserProfile];
-     [self getLongSitRemind];
-     //[self setOS];
-     [self getTurnWristLight];
-         
+    [self synTime];
+    [self setAlarms];
+    [self getAlarms];
+    //[self setStepTarget];
+    [self setUserProfile];
+    [self getLongSitRemind];
+    //[self setOS];
+    [self getTurnWristLight];
+    
 }
 
 
@@ -1561,7 +1779,7 @@
     [alertView addAction:clearAllLogFileAction];
     [alertView addAction:clearTodayLogFile];
     [self presentViewController:alertView animated:YES completion:nil];
-
+    
 }
 
 -(void)handlerTestUser
@@ -1586,7 +1804,7 @@
             
         }];
     }];
-
+    
     UIAlertAction *enableAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"加入测试用户", @"加入测试用户") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         [SVProgressHUD show];
         [[ZHRealTekDataManager shareRealTekDataManager]enableTesterOnFinished:^(NSError *error, BOOL success){
@@ -1623,7 +1841,7 @@
     [alertView addAction:disAbleAction];
     [alertView addAction:isTestUserAction];
     [self presentViewController:alertView animated:YES completion:nil];
-
+    
 }
 
 
@@ -1672,19 +1890,35 @@
             [self getContinuousHeartRate:enAble];
         }
             break;
-
+        case ZHSetScreenOrientation:{ // set screen orientation
+            [self setScreenOrientation:enAble];
+        }
+            break;
+        case ZHTestMultiReminder:{ // send multi reminder
+            [self setMultiReminder:enAble];
+        }
+            break;
+        case ZHTestContinuousReminder:{
+            [self sendCMultiReminder:enAble];
+        }
+            break;
+        case ZHBloodPressure:{
+            [self setBloodPressueEnable:enAble];
+        }
+            break;
+            
         default:
             break;
     }
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

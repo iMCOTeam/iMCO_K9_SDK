@@ -35,6 +35,8 @@
 
 * All interface calls are called with block-mode callbacks. All blocks are defined in the `ZHRealTekBlocks` class.
 
+* Check out the [documentation](http://cocoadocs.org/docsets/iMCO_K9_SDK/) for a comprehensive look at all of the APIs available in `iMCO_K9_SDK`
+
   ​
 
   ​

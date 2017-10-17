@@ -986,7 +986,7 @@
         if (time && time.length > 0) {
             self.sitTime = time.integerValue;
             ZHRealTekLongSit *sit = [[ZHRealTekLongSit alloc]init];
-            sit.onEnable = switchCell.switchView.on;
+            sit.enable = switchCell.switchView.on;
             sit.sitTime = self.sitTime;
             [SVProgressHUD show];
             [[ZHRealTekDataManager shareRealTekDataManager]setLongSitRemind:sit onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
@@ -1044,7 +1044,7 @@
 {
     
     ZHRealTekLongSit *sit = [[ZHRealTekLongSit alloc]init];
-    sit.onEnable = onEable;
+    sit.enable = onEable;
     sit.sitTime = self.sitTime;
     [SVProgressHUD show];
     [[ZHRealTekDataManager shareRealTekDataManager]setLongSitRemind:sit onFinished:^(ZHRealTekDevice *device, NSError *error, id result){

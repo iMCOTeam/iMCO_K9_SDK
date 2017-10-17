@@ -109,6 +109,18 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
 
 
 /**
+ Whether to download the firmware automatically.
+ */
+@property (nonatomic) BOOL autoDloadFWData;
+
+
+/**
+ The user ID used to automatically download the firmware. can be empty.
+ */
+@property (nonatomic) NSString * userIdentifier;
+
+
+/**
  Whether or not the central is currently scanning.
  */
 @property (nonatomic) BOOL isScanning;
@@ -553,6 +565,19 @@ extern NSString *const ZH_RealTek_CalibrationKey; //calibration sport Data key.
  @param finished callback.
  */
 -(void)getDisplayOrientation:(ZHRealTekSendCommandBlock)finished;
+
+
+/**
+ Gets the device functional module.
+
+ @param finished callback.
+ @discussion finished result is int number.See the device properties for details.
+ */
+-(void)getDeviceFunstions:(ZHRealTekSendCommandBlock)finished;
+
+
+#pragma mark - Send Message
+-(void)sendUniversalMessage:(NSString *)message vibrateTimes:(NSInteger)times messageType:(ZH_RealTek_UniVersal_MessageType)type onFinished:(ZHRealTekSendCommandBlock)finished;
 
 #pragma mark - OTA Function
 /**

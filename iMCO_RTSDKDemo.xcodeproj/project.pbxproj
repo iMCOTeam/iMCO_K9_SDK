@@ -403,7 +403,7 @@
 				TargetAttributes = {
 					9E1103B61F0A214D005A084E = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 638EB3H4SQ;
+						DevelopmentTeam = 64QZ5ZPJ44;
 						ProvisioningStyle = Automatic;
 					};
 					9E1103CF1F0A214D005A084E = {
@@ -787,7 +787,7 @@
 			baseConfigurationReference = B1DC1052B780E5BE6DE1494F /* Pods-iMCO_RTSDKDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 638EB3H4SQ;
+				DEVELOPMENT_TEAM = 64QZ5ZPJ44;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMCOSDK",
@@ -805,7 +805,7 @@
 			baseConfigurationReference = 77282100FFF836831A636863 /* Pods-iMCO_RTSDKDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 638EB3H4SQ;
+				DEVELOPMENT_TEAM = 64QZ5ZPJ44;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iMCOSDK",

@@ -69,6 +69,18 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_Bind_Status)
 
 
 
+/**
+ The type of unsolicited message.
+
+ - RealTek_Message_Ordering: Order message
+ */
+typedef NS_ENUM(NSInteger, ZH_RealTek_UniVersal_MessageType)
+{
+    RealTek_Message_Ordering = 1, //Ordering.
+    RealTek_Message_ShutDownPower = 0xff, //Shut down power
+    RealTek_Message_Reboot = 0xfe, //reboot
+};
+
 enum ZH_RealTek_Day
 {
     ZH_RealTek_None = 0x00,
@@ -245,6 +257,7 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_ScreenOrientation) {
  @discussion The maximum number of alarms is 8.
  */
 @interface ZHRealTekAlarm : NSObject
+@property (nonatomic, assign) BOOL enable; // On or off,default is No.
 @property (nonatomic, assign) NSInteger year;
 @property (nonatomic, assign) NSInteger month;
 @property (nonatomic, assign) NSInteger day;
@@ -259,7 +272,7 @@ typedef NS_ENUM(NSInteger, ZH_RealTek_ScreenOrientation) {
 
 @interface ZHRealTekLongSit : NSObject
 
-@property (nonatomic, assign) BOOL onEnable; // On or off,default is off/NO
+@property (nonatomic, assign) BOOL enable; // On or off,default is No.
 @property (nonatomic, assign) NSInteger minStepNum; //In a sedentary time, the number of steps below this threshold is only a reminder. default is 10
 @property (nonatomic, assign) NSInteger sitTime; // (Unit minutes) default is 60
 @property (nonatomic, assign) NSInteger beginTime;// begin time （0~24） default is 9.

@@ -23,7 +23,6 @@
     [ZHRealTekDataManager shareRealTekDataManager].AppKey = @"keyOPCjEL08cCCIgm33y8cmForWXLSR9uLT";
     [ZHRealTekDataManager shareRealTekDataManager].AppSecret = @"secaab78b9d7dbe11e7a420ee796be10e85-i6ff579j49afj5";
     
-   
     // Override point for customization after application launch.
     return YES;
 }

@@ -63,6 +63,8 @@ typedef NS_ENUM(NSInteger, ZHFunctionMode) {
     ZHSetScreenOrientation,
     ZHGetScreenOrientation,
     ZHBloodPressure,
+    ZHDeviceFunctions,
+    ZHSendUniversalMessage,
 };
 
 @interface ZHFunctionModel : NSObject

@@ -13,6 +13,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <iMCOK9SDK/iMCOK9SDK.h>
 
+
 #define DeviceActionCellIdentifier @"DeviceActionCellIdentifier"
 #define DeviceSwitchCellIdentifier @"DeviceSwitchCellIdentifier"
 
@@ -226,7 +227,9 @@
     ZHFunctionModel *incomingReminder = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"来电提醒", @"inComing Reminder") cellMode:ZHTitleAndSwitch functionMode:ZHIncomingReminder];
     ZHFunctionModel *setScreenDirection = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"横竖屏设置", @"Screen setup") cellMode:ZHTitleAndSwitch functionMode:ZHSetScreenOrientation];
     ZHFunctionModel *getScreenDirection = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取横竖屏设置", @"Get screen Setup") cellMode:ZHOnlyTitle functionMode:ZHGetScreenOrientation];
-    return @[synTime,setAlarm,getAlarms,setStepTarget,setUserProfile,sittingRemider,getSittingRemider,synPhoneSystem,enterPhotoMode,exitPhotoMode,RHLightScreen,getRHLightScreenSetting,qqReminder,wechatReminder,smsReminder,lineReminder,incomingReminder,setScreenDirection,getScreenDirection];
+    ZHFunctionModel *deviceFunctions = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取设备功能", @"获取设备功能") cellMode:ZHOnlyTitle functionMode:ZHDeviceFunctions];
+    return @[synTime,setAlarm,getAlarms,setStepTarget,setUserProfile,sittingRemider,getSittingRemider,synPhoneSystem,enterPhotoMode,exitPhotoMode,RHLightScreen,getRHLightScreenSetting,qqReminder,wechatReminder,smsReminder,lineReminder,incomingReminder,setScreenDirection,getScreenDirection,deviceFunctions];
+    
     
     
 }
@@ -257,7 +260,8 @@
     ZHFunctionModel *getPatchVersion = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取固件Patch版本", @"Get Firmware Patch Version") cellMode:ZHOnlyTitle functionMode:ZHGetPatchVersion];
     ZHFunctionModel *getMacAddress = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取固件Mac地址", @"Get Firmware Mac Address") cellMode:ZHOnlyTitle functionMode:ZHGetMacAddress];
     ZHFunctionModel *getSDKVersion = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"获取SDK版本", @"Get SDK Version") cellMode:ZHOnlyTitle functionMode:ZHGetSDKVersion];
-    return @[findBand,modifyDeviceName,getBandDeviceName,getBattery,getAppVersion,getPatchVersion,getMacAddress,getSDKVersion];
+    ZHFunctionModel *sendMessage = [[ZHFunctionModel alloc]initWithTitle:NSLocalizedString(@"发送消息",@"发送消息" ) cellMode:ZHOnlyTitle functionMode:ZHSendUniversalMessage];
+    return @[findBand,modifyDeviceName,getBandDeviceName,getBattery,getAppVersion,getPatchVersion,getMacAddress,getSDKVersion,sendMessage];
 }
 
 
@@ -482,6 +486,9 @@
             [self getScreenOrientation];
         }
             break;
+        case ZHDeviceFunctions:{
+            [self getDeviceAllFunctions];
+        }
         default:
             break;
     }
@@ -564,7 +571,10 @@
             [self getSDKVersion];
         }
             break;
-            
+        case ZHSendUniversalMessage:{ // send message
+            [self sendUniversalMessage];
+        }
+            break;
         default:
             break;
     }
@@ -1039,6 +1049,21 @@
     }];
 }
 
+
+-(void)getDeviceAllFunctions
+{
+    [SVProgressHUD show];
+    [[ZHRealTekDataManager shareRealTekDataManager]getDeviceFunstions:^(ZHRealTekDevice *device, NSError *error, id result){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"获取设备功能模块成功!", @"获取设备功能模块成功!")];
+            }else{
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }
+        });
+        
+    }];
+}
 
 -(void)setLongSitRemind:(BOOL)onEable
 {
@@ -1616,6 +1641,40 @@
     }];
 }
 
+-(void)sendUniversalMessage
+{
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Message", @"Message") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField){
+        textField.placeholder = @"message";
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"OK") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [SVProgressHUD show];
+        UITextField *messageTextField = [alertView.textFields firstObject];
+        NSString *message = messageTextField.text;
+        if (message && message.length > 0) {
+            [[ZHRealTekDataManager shareRealTekDataManager]sendUniversalMessage:message vibrateTimes:5 messageType:RealTek_Message_Ordering onFinished:^(ZHRealTekDevice *device, NSError *error, id result){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error) {
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    }else{
+                        [SVProgressHUD showSuccessWithStatus:nil];
+                    }
+                });
+            }];
+            
+        }
+        
+    }];
+    [alertView addAction:cancelAction];
+    [alertView addAction:okAction];
+    [self presentViewController:alertView animated:YES completion:nil];
+}
+
+
 -(void)getSDKVersion
 {
     NSString *version = [[ZHRealTekDataManager shareRealTekDataManager]iMCOSDKVersion];
@@ -1692,6 +1751,7 @@
     alarm1.minute = minute + 2;
     alarm1.index = 0;
     alarm1.dayFlags = 0;
+    alarm1.enable = NO;
     
     ZHRealTekAlarm *alarm2 = [[ZHRealTekAlarm alloc]init];
     alarm2.year =  year;
@@ -1701,6 +1761,7 @@
     alarm2.minute = minute + 4;
     alarm2.index = 1;
     alarm2.dayFlags = 0;
+    alarm2.enable = YES;
     
     ZHRealTekAlarm *alarm3 = [[ZHRealTekAlarm alloc]init];
     alarm3.year =  year;
@@ -1710,6 +1771,7 @@
     alarm3.minute = minute + 6;
     alarm3.index = 2;
     alarm3.dayFlags = 0;
+    alarm3.enable = NO;
     
     return @[alarm1,alarm2,alarm3];
 }
@@ -1922,3 +1984,4 @@
  */
 
 @end
+
